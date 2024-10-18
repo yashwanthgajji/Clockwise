@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.yash.apps.clockwise.model.Task
 import kotlin.concurrent.Volatile
 
 @Database(entities = [Task::class], version = 1, exportSchema = true)

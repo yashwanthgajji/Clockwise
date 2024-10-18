@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.data
+package com.yash.apps.clockwise.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,5 +12,5 @@ data class Task(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "parentId")
-    val parentId: String? = null
+    val parentId: Int? = null
 )

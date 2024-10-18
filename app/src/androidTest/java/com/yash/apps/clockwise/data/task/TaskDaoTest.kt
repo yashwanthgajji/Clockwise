@@ -1,9 +1,10 @@
-package com.yash.apps.clockwise.data
+package com.yash.apps.clockwise.data.task
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.yash.apps.clockwise.data.TaskDatabase
 import com.yash.apps.clockwise.model.Task
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

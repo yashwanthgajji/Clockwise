@@ -12,5 +12,7 @@ data class Task(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "parentId")
-    val parentId: Int? = null
+    val parentId: Int? = null,
+    @ColumnInfo(name = "isCompleted")
+    val isCompleted: Boolean = false
 )

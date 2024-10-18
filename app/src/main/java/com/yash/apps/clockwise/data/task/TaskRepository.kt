@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.data
+package com.yash.apps.clockwise.data.task
 
 import com.yash.apps.clockwise.model.Task
 import kotlinx.coroutines.flow.Flow

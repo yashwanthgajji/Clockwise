@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.data
+package com.yash.apps.clockwise.data.task
 
 import androidx.room.Dao
 import androidx.room.Delete

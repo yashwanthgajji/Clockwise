@@ -9,9 +9,9 @@ import java.util.UUID
 data class Task(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: UUID,
+    val id: Int,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "parentId")
-    val parentId: UUID?
+    val parentId: String? = null
 )

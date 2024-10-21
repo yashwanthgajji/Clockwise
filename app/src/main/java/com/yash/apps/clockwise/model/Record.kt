@@ -11,6 +11,8 @@ data class Record(
     val recordId: Int,
     @ColumnInfo(name = "taskId")
     val taskId: Int,
+    @ColumnInfo(name = "subTaskId")
+    val subTaskId: Int? = null,
     @ColumnInfo(name = "date")
     val date: Long,
     @ColumnInfo(name = "startTime")

@@ -28,7 +28,9 @@ import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    Scaffold() { innerPadding ->
+    Scaffold(
+        topBar = { HomeScreenTopBar(title = "TimeLine") }
+    ) { innerPadding ->
         TimelineList(days = listOf(), modifier = modifier.padding(innerPadding))
     }
 }
@@ -60,7 +62,7 @@ fun HomeScreenTopBarPreview() {
 }
 
 @Composable
-fun TimelineList(days: List<Section>, modifier: Modifier = Modifier) {
+fun TimelineList(days: List<TimeLineSectionUiState>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
     ) {
@@ -72,7 +74,7 @@ fun TimelineList(days: List<Section>, modifier: Modifier = Modifier) {
                 TaskItem(
                     taskName = task.name,
                     subTaskName = task.name,
-                    totalDuration = task.name,
+                    totalDuration = "10:58:43",
                     onItemClick = { }
                 )
             }
@@ -154,7 +156,7 @@ fun TaskItem(
 fun TimelineListPreview() {
     val days = remember {
         listOf(
-            Section(
+            TimeLineSectionUiState(
                 "Sunday, October 20th, 2024",
                 listOf(
                     Task(1, "Learning"),
@@ -162,7 +164,7 @@ fun TimelineListPreview() {
                     Task(1, "Project")
                 )
             ),
-            Section(
+            TimeLineSectionUiState(
                 "Monday, October 14th, 2024",
                 listOf(
                     Task(1, "Gym"),
@@ -170,7 +172,7 @@ fun TimelineListPreview() {
                     Task(1, "Walking")
                 )
             ),
-            Section(
+            TimeLineSectionUiState(
                 "Saturday, October 12th, 2024",
                 listOf(
                     Task(1, "Course Work"),

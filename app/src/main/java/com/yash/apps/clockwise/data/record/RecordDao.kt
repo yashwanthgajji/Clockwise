@@ -17,6 +17,8 @@ interface RecordDao {
     suspend fun update(record: Record)
     @Delete
     suspend fun delete(record: Record)
+    @Query("SELECT * FROM records")
+    fun getAllRecords(): Flow<List<Record>>
     @Query("SELECT * FROM records WHERE recordId = :recordId")
     fun getRecord(recordId: Int): Flow<Record>
     @Query("SELECT * FROM records WHERE taskId = :taskId")

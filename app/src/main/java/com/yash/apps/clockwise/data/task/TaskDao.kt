@@ -21,6 +21,6 @@ interface TaskDao {
     fun getAllTasks(): Flow<List<Task>>
     @Query("SELECT * FROM tasks WHERE id = :id")
     fun getTask(id: Int): Flow<Task>
-    @Query("SELECT * FROM tasks WHERE parentId = :parentId")
-    fun getSubTasks(parentId: Int): Flow<List<Task>>
+    @Query("SELECT name FROM tasks WHERE id = :id")
+    fun getTaskName(id: Int): String
 }

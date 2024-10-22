@@ -11,10 +11,14 @@ data class Record(
     val recordId: Int,
     @ColumnInfo(name = "taskId")
     val taskId: Int,
+    @ColumnInfo(name = "subTaskId")
+    val subTaskId: Int? = null,
     @ColumnInfo(name = "date")
     val date: Long,
     @ColumnInfo(name = "startTime")
     val startTime: Long,
     @ColumnInfo(name = "endTime")
-    val endTime: Long
+    val endTime: Long,
+    @ColumnInfo(name = "duration")
+    val duration: String
 )

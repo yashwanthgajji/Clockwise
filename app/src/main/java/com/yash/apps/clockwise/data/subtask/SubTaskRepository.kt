@@ -10,4 +10,5 @@ interface SubTaskRepository {
     fun getAllSubTasksStream(): Flow<List<SubTask>>
     fun getSubTaskStream(id:Int): Flow<SubTask?>
     fun getAllSubTasksOfTaskStream(taskId: Int): Flow<List<SubTask>>
+    fun getSubTaskNameById(id: Int): String
 }

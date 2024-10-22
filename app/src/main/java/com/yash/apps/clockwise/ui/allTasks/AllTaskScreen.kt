@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -121,6 +123,27 @@ fun TaskItem(name: String, isSubTask: Boolean, modifier: Modifier = Modifier) {
                     .width(24.dp)
             )
         }
+    }
+}
+
+@Composable
+fun NewTaskButton(onClick:() -> Unit, modifier: Modifier = Modifier) {
+    Button(onClick = onClick) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
+            Text(text = "New Task")
+        }
+    }
+}
+
+@Preview
+@Composable
+fun NewTaskButtonPreview() {
+    ClockwiseTheme {
+        NewTaskButton(onClick = { })
     }
 }
 

@@ -65,6 +65,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //ViewModel
+    implementation(libs.lifecycle.viewmodel.compose)
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

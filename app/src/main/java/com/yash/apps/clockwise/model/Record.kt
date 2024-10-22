@@ -18,5 +18,7 @@ data class Record(
     @ColumnInfo(name = "startTime")
     val startTime: Long,
     @ColumnInfo(name = "endTime")
-    val endTime: Long
+    val endTime: Long,
+    @ColumnInfo(name = "duration")
+    val duration: String
 )

@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.ui.home
+package com.yash.apps.clockwise.ui.timeline
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,28 +16,44 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.yash.apps.clockwise.model.Task
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.yash.apps.clockwise.ui.AppViewModelProvider
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun TimelineScreen(
+    modifier: Modifier = Modifier,
+    viewModel: TimelineViewModel = viewModel(factory = AppViewModelProvider.factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val timelineUiState by viewModel.timelineUiState.collectAsState()
     Scaffold(
-        topBar = { HomeScreenTopBar(title = "TimeLine") }
+        topBar = {
+            TimelineScreenTopBar(title = "Timeline", scrollBehavior = scrollBehavior)
+        }
     ) { innerPadding ->
-        TimelineList(days = listOf(), modifier = modifier.padding(innerPadding))
+        TimelineList(days = timelineUiState.days, modifier = modifier.padding(innerPadding))
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenTopBar(title: String, modifier: Modifier = Modifier) {
+private fun TimelineScreenTopBar(
+    title: String,
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -46,6 +62,7 @@ fun HomeScreenTopBar(title: String, modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
+        scrollBehavior = scrollBehavior,
         modifier = modifier,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -53,29 +70,21 @@ fun HomeScreenTopBar(title: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
 @Composable
-fun HomeScreenTopBarPreview() {
-    ClockwiseTheme {
-        HomeScreenTopBar(title = "TimeLine")
-    }
-}
-
-@Composable
-fun TimelineList(days: List<TimeLineSectionUiState>, modifier: Modifier = Modifier) {
+private fun TimelineList(days: List<TimelineDay>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier,
     ) {
         days.forEach { day ->
             item {
-                DaySectionHeader(dayString = day.title)
+                DaySectionHeader(dayString = day.date)
             }
-            items(day.tasks) { task ->
-                TaskItem(
-                    taskName = task.name,
-                    subTaskName = task.name,
-                    totalDuration = "10:58:43",
-                    onItemClick = { }
+            items(day.recordDetails) { recordDetail ->
+                RecordItem(
+                    taskName = recordDetail.taskName,
+                    subTaskName = recordDetail.subTaskName ?: "",
+                    totalDuration = recordDetail.duration,
+                    onItemClick = { /*TODO*/ }
                 )
             }
         }
@@ -83,7 +92,7 @@ fun TimelineList(days: List<TimeLineSectionUiState>, modifier: Modifier = Modifi
 }
 
 @Composable
-fun DaySectionHeader(dayString: String, modifier: Modifier = Modifier) {
+private fun DaySectionHeader(dayString: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -99,7 +108,7 @@ fun DaySectionHeader(dayString: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TaskItem(
+private fun RecordItem(
     taskName: String,
     subTaskName: String,
     totalDuration: String,
@@ -153,31 +162,30 @@ fun TaskItem(
 
 @Preview(showBackground = true)
 @Composable
-fun TimelineListPreview() {
+private fun TimelineListPreview() {
     val days = remember {
         listOf(
-            TimeLineSectionUiState(
+            TimelineDay(
                 "Sunday, October 20th, 2024",
                 listOf(
-                    Task(1, "Learning"),
-                    Task(1, "Certification"),
-                    Task(1, "Project")
+                    RecordDetails("Learning", "Leetcode", 1L, "02:31:15"),
+                    RecordDetails("Gym", "Cardio", 1L, "00:50:17"),
+                    RecordDetails("Course Work", "NLP", 1L, "14:20:02"),
                 )
             ),
-            TimeLineSectionUiState(
+            TimelineDay(
                 "Monday, October 14th, 2024",
                 listOf(
-                    Task(1, "Gym"),
-                    Task(1, "Exercise"),
-                    Task(1, "Walking")
+                    RecordDetails("Gym", "Triceps", 1L, "01:10:00"),
+                    RecordDetails("Learning", "Android Project", 1L, "00:31:15"),
+                    RecordDetails("Gym", "Chest", date = 1L),
                 )
             ),
-            TimeLineSectionUiState(
+            TimelineDay(
                 "Saturday, October 12th, 2024",
                 listOf(
-                    Task(1, "Course Work"),
-                    Task(1, "NLP"),
-                    Task(1, "Database")
+                    RecordDetails("Course Work", "Database", 1L, "09:40:59"),
+                    RecordDetails("Learning", date = 1L),
                 )
             )
         )
@@ -189,7 +197,7 @@ fun TimelineListPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun DaySectionHeaderPreview() {
+private fun DaySectionHeaderPreview() {
     ClockwiseTheme {
         DaySectionHeader("Sunday, October 20th, 2024")
     }
@@ -197,8 +205,8 @@ fun DaySectionHeaderPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun TaskItemPreview() {
+private fun TaskItemPreview() {
     ClockwiseTheme {
-        TaskItem("Learning", "Leetcode", "20:18:59", onItemClick = { })
+        RecordItem("Learning", "Leetcode", "20:18:59", onItemClick = { })
     }
 }

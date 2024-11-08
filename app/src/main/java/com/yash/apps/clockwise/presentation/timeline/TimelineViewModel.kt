@@ -1,10 +1,10 @@
-package com.yash.apps.clockwise.ui.timeline
+package com.yash.apps.clockwise.presentation.timeline
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yash.apps.clockwise.data.record.RecordRepository
-import com.yash.apps.clockwise.data.subtask.SubTaskRepository
-import com.yash.apps.clockwise.data.task.TaskRepository
+import com.yash.apps.clockwise.domain.repository.RecordRepository
+import com.yash.apps.clockwise.domain.repository.SubTaskRepository
+import com.yash.apps.clockwise.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

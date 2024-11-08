@@ -1,6 +1,6 @@
-package com.yash.apps.clockwise.data.record
+package com.yash.apps.clockwise.domain.repository
 
-import com.yash.apps.clockwise.model.Record
+import com.yash.apps.clockwise.domain.model.Record
 import kotlinx.coroutines.flow.Flow
 
 interface RecordRepository {

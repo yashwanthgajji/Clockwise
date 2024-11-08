@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.ui.timeline
+package com.yash.apps.clockwise.presentation.timeline
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.yash.apps.clockwise.ui.AppViewModelProvider
+import com.yash.apps.clockwise.presentation.AppViewModelProvider
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

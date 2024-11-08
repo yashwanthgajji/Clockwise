@@ -1,11 +1,11 @@
-package com.yash.apps.clockwise.model
+package com.yash.apps.clockwise.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "subTasks")
-data class SubTask(
+@Entity(tableName = "tasks")
+data class Task(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int,
@@ -14,7 +14,5 @@ data class SubTask(
     @ColumnInfo(name = "duration")
     val duration: String? = null,
     @ColumnInfo(name = "isCompleted")
-    val isCompleted: Boolean = false,
-    @ColumnInfo(name = "taskId")
-    val taskId: Int
+    val isCompleted: Boolean = false
 )

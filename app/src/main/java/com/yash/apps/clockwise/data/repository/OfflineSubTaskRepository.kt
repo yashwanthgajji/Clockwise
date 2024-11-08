@@ -1,6 +1,8 @@
-package com.yash.apps.clockwise.data.subtask
+package com.yash.apps.clockwise.data.repository
 
-import com.yash.apps.clockwise.model.SubTask
+import com.yash.apps.clockwise.data.local.subtask.SubTaskDao
+import com.yash.apps.clockwise.domain.model.SubTask
+import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import kotlinx.coroutines.flow.Flow
 
 class OfflineSubTaskRepository(private val subTaskDao: SubTaskDao): SubTaskRepository {

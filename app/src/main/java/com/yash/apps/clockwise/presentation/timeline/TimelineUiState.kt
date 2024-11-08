@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.ui.timeline
+package com.yash.apps.clockwise.presentation.timeline
 
 data class TimelineUiState (
     val days: List<TimelineDay> = listOf()

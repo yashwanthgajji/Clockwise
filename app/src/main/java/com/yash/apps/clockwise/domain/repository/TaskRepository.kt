@@ -1,6 +1,6 @@
-package com.yash.apps.clockwise.data.task
+package com.yash.apps.clockwise.domain.repository
 
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.domain.model.Task
 import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {

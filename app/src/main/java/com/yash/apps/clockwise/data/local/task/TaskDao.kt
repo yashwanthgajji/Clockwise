@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.data.task
+package com.yash.apps.clockwise.data.local.task
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.domain.model.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao

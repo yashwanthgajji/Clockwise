@@ -1,12 +1,11 @@
-package com.yash.apps.clockwise.ui
+package com.yash.apps.clockwise.presentation
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yash.apps.clockwise.ClockwiseApplication
-import com.yash.apps.clockwise.ui.timeline.TimelineViewModel
+import com.yash.apps.clockwise.presentation.timeline.TimelineViewModel
 
 object AppViewModelProvider {
     val factory = viewModelFactory {

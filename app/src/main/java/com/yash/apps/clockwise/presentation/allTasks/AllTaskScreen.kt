@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.ui.allTasks
+package com.yash.apps.clockwise.presentation.allTasks
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,8 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.yash.apps.clockwise.model.SubTask
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.domain.model.SubTask
+import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable

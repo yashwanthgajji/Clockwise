@@ -5,7 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yash.apps.clockwise.data.TaskDatabase
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.data.local.task.TaskDao
+import com.yash.apps.clockwise.domain.model.Task
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After

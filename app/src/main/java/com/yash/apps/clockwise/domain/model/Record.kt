@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.model
+package com.yash.apps.clockwise.domain.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

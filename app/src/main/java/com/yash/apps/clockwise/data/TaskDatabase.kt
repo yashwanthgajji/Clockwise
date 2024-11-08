@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.yash.apps.clockwise.data.record.RecordDao
-import com.yash.apps.clockwise.data.subtask.SubTaskDao
-import com.yash.apps.clockwise.data.task.TaskDao
-import com.yash.apps.clockwise.model.Record
-import com.yash.apps.clockwise.model.SubTask
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.data.local.record.RecordDao
+import com.yash.apps.clockwise.data.local.subtask.SubTaskDao
+import com.yash.apps.clockwise.data.local.task.TaskDao
+import com.yash.apps.clockwise.domain.model.Record
+import com.yash.apps.clockwise.domain.model.SubTask
+import com.yash.apps.clockwise.domain.model.Task
 import kotlin.concurrent.Volatile
 
 @Database(entities = [Task::class, SubTask::class, Record::class], version = 1, exportSchema = true)

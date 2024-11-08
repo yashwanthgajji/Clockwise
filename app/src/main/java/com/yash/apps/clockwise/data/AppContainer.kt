@@ -1,12 +1,12 @@
 package com.yash.apps.clockwise.data
 
 import android.content.Context
-import com.yash.apps.clockwise.data.record.OfflineRecordRepository
-import com.yash.apps.clockwise.data.record.RecordRepository
-import com.yash.apps.clockwise.data.subtask.OfflineSubTaskRepository
-import com.yash.apps.clockwise.data.subtask.SubTaskRepository
-import com.yash.apps.clockwise.data.task.OfflineTaskRepository
-import com.yash.apps.clockwise.data.task.TaskRepository
+import com.yash.apps.clockwise.data.repository.OfflineRecordRepository
+import com.yash.apps.clockwise.domain.repository.RecordRepository
+import com.yash.apps.clockwise.data.repository.OfflineSubTaskRepository
+import com.yash.apps.clockwise.domain.repository.SubTaskRepository
+import com.yash.apps.clockwise.data.repository.OfflineTaskRepository
+import com.yash.apps.clockwise.domain.repository.TaskRepository
 
 interface AppContainer {
     val taskRepository: TaskRepository

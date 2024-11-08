@@ -1,6 +1,8 @@
-package com.yash.apps.clockwise.data.task
+package com.yash.apps.clockwise.data.repository
 
-import com.yash.apps.clockwise.model.Task
+import com.yash.apps.clockwise.data.local.task.TaskDao
+import com.yash.apps.clockwise.domain.model.Task
+import com.yash.apps.clockwise.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 
 class OfflineTaskRepository(private val taskDao: TaskDao): TaskRepository {

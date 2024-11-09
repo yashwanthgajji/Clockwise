@@ -1,32 +1,43 @@
 package com.yash.apps.clockwise.presentation.timeline.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.yash.apps.clockwise.R
+import com.yash.apps.clockwise.presentation.common.IconWithLabel
 import com.yash.apps.clockwise.presentation.timeline.RecordDetails
 import com.yash.apps.clockwise.presentation.timeline.TimelineDay
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
 fun TimelineList(days: List<TimelineDay>, modifier: Modifier = Modifier) {
-    LazyColumn(
-        modifier = modifier,
-    ) {
-        days.forEach { day ->
-            item {
-                DaySectionHeader(dayString = day.date)
-            }
-            items(day.recordDetails) { recordDetail ->
-                RecordItem(
-                    taskName = recordDetail.taskName,
-                    subTaskName = recordDetail.subTaskName ?: "",
-                    totalDuration = recordDetail.duration,
-                    onItemClick = { /*TODO*/ }
-                )
+    if (days.isEmpty()) {
+        IconWithLabel(
+            modifier = Modifier.fillMaxSize(),
+            icon = R.drawable.hour_glass,
+            label = "Start Working on a task to see timeline"
+        )
+    } else {
+        LazyColumn(
+            modifier = modifier,
+        ) {
+            days.forEach { day ->
+                item {
+                    DaySectionHeader(dayString = day.date)
+                }
+                items(day.recordDetails) { recordDetail ->
+                    RecordItem(
+                        taskName = recordDetail.taskName,
+                        subTaskName = recordDetail.subTaskName ?: "",
+                        totalDuration = recordDetail.duration,
+                        onItemClick = { /*TODO*/ }
+                    )
+                }
             }
         }
     }

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun NewTaskFabComponent(modifier: Modifier = Modifier) {
+fun NewTaskFabComponent(modifier: Modifier = Modifier, onSave: (String) -> Unit) {
     var isInsertForm = rememberSaveable { mutableStateOf(false) }
     var taskName = rememberSaveable { mutableStateOf("") }
     AnimatedContent(
@@ -68,7 +68,11 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier) {
                             contentDescription = null
                         )
                     }
-                    Button(onClick = { isInsertForm.value = false }) {
+                    Button(onClick = {
+                        onSave(taskName.value)
+                        taskName.value = ""
+                        isInsertForm.value = false
+                    }) {
                         Text(text = "Save")
                     }
                 }
@@ -92,6 +96,6 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier) {
 @Composable
 private fun NewTaskFabButton() {
     ClockwiseTheme {
-        NewTaskFabComponent()
+        NewTaskFabComponent(onSave = {})
     }
 }

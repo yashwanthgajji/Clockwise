@@ -12,6 +12,9 @@ import com.yash.apps.clockwise.data.repository.OfflineTaskRepository
 import com.yash.apps.clockwise.domain.repository.RecordRepository
 import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import com.yash.apps.clockwise.domain.repository.TaskRepository
+import com.yash.apps.clockwise.domain.usecases.task.GetTasks
+import com.yash.apps.clockwise.domain.usecases.task.InsertTask
+import com.yash.apps.clockwise.domain.usecases.task.TaskUseCases
 import com.yash.apps.clockwise.util.Constants.TASK_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -67,5 +70,14 @@ object AppModule {
     @Singleton
     fun provideRecordRepository(recordDao: RecordDao):RecordRepository {
         return OfflineRecordRepository(recordDao = recordDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTaskUseCases(taskRepository: TaskRepository): TaskUseCases {
+        return TaskUseCases(
+            getTasks = GetTasks(taskRepository),
+            insertTask = InsertTask(taskRepository)
+        )
     }
 }

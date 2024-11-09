@@ -12,6 +12,8 @@ import com.yash.apps.clockwise.data.repository.OfflineTaskRepository
 import com.yash.apps.clockwise.domain.repository.RecordRepository
 import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import com.yash.apps.clockwise.domain.repository.TaskRepository
+import com.yash.apps.clockwise.domain.usecases.record.GetRecordsByTask
+import com.yash.apps.clockwise.domain.usecases.record.RecordUseCases
 import com.yash.apps.clockwise.domain.usecases.task.GetTasks
 import com.yash.apps.clockwise.domain.usecases.task.InsertTask
 import com.yash.apps.clockwise.domain.usecases.task.TaskUseCases
@@ -79,5 +81,11 @@ object AppModule {
             getTasks = GetTasks(taskRepository),
             insertTask = InsertTask(taskRepository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecordUseCases(recordRepository: RecordRepository): RecordUseCases {
+        return RecordUseCases(getRecordsByTask = GetRecordsByTask(recordRepository))
     }
 }

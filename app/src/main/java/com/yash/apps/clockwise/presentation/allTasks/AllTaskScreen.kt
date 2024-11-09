@@ -35,9 +35,11 @@ import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun AllTaskScreen(modifier: Modifier = Modifier) {
-    Scaffold { innerPadding ->
-        TaskList(modifier = Modifier.padding(innerPadding))
+fun AllTaskScreen(modifier: Modifier = Modifier, bottomBarContent: @Composable () -> Unit) {
+    Scaffold(
+        bottomBar = bottomBarContent
+    ) { innerPadding ->
+        TaskList(modifier = modifier.padding(innerPadding))
     }
 }
 

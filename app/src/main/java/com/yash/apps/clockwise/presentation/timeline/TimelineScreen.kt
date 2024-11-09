@@ -24,23 +24,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimelineScreen(
     modifier: Modifier = Modifier,
-    viewModel: TimelineViewModel = hiltViewModel()
+    viewModel: TimelineViewModel,
+    bottomBarContent: @Composable () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val timelineUiState by viewModel.timelineUiState.collectAsState()
     Scaffold(
         topBar = {
             TimelineScreenTopBar(title = "Timeline", scrollBehavior = scrollBehavior)
-        }
+        },
+        bottomBar = bottomBarContent
     ) { innerPadding ->
         TimelineList(days = timelineUiState.days, modifier = modifier.padding(innerPadding))
     }
@@ -64,7 +66,7 @@ private fun TimelineScreenTopBar(
         scrollBehavior = scrollBehavior,
         modifier = modifier,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = Color.Transparent
         )
     )
 }

@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.yash.apps.clockwise.domain.repository.RecordRepository
 import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import com.yash.apps.clockwise.domain.repository.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class TimelineViewModel(
+@HiltViewModel
+class TimelineViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     private val subTaskRepository: SubTaskRepository,
     private val recordRepository: RecordRepository

@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.presentation.allTasks.AllTaskScreen
+import com.yash.apps.clockwise.presentation.allTasks.AllTaskViewModel
 import com.yash.apps.clockwise.presentation.navgraph.Route
 import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNavigation
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
@@ -25,9 +26,9 @@ import com.yash.apps.clockwise.presentation.timeline.TimelineViewModel
 fun AppNavigator(modifier: Modifier = Modifier) {
     val bottomNavigationItems = remember {
         listOf(
-            BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Home"),
-            BottomNavigationItem(icon = R.drawable.tasks_icon, text = "Search"),
-            BottomNavigationItem(icon = R.drawable.chart_icon, text = "Report")
+            BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Timeline"),
+            BottomNavigationItem(icon = R.drawable.tasks_icon, text = "All Tasks"),
+            BottomNavigationItem(icon = R.drawable.chart_icon, text = "Reports")
         )
     }
     val navController = rememberNavController()
@@ -75,7 +76,8 @@ fun AppNavigator(modifier: Modifier = Modifier) {
             TimelineScreen(viewModel = viewModel, bottomBarContent = bottomBar)
         }
         composable(route = Route.AllTasksScreen.route) {
-            AllTaskScreen(bottomBarContent = bottomBar)
+            val viewModel: AllTaskViewModel = hiltViewModel()
+            AllTaskScreen(viewModel = viewModel, bottomBarContent = bottomBar)
         }
         composable(route = Route.ReportsScreen.route) {
 

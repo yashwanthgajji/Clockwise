@@ -72,9 +72,9 @@ private fun AppBottomNavigationPreview() {
     ClockwiseTheme {
         AppBottomNavigation(
             items = listOf(
-                BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Home"),
-                BottomNavigationItem(icon = R.drawable.tasks_icon, text = "Search"),
-                BottomNavigationItem(icon = R.drawable.chart_icon, text = "Report")
+                BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Timeline"),
+                BottomNavigationItem(icon = R.drawable.tasks_icon, text = "All Tasks"),
+                BottomNavigationItem(icon = R.drawable.chart_icon, text = "Reports")
             ),
             selectedItem = 0,
             onItemClick = {}

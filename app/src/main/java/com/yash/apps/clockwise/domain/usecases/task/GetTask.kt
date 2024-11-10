@@ -4,8 +4,8 @@ import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetTasks(private val taskRepository: TaskRepository) {
-    operator fun invoke(): Flow<List<Task>> {
-        return taskRepository.getAllTasksStream()
+class GetTask(private val taskRepository: TaskRepository) {
+    operator fun invoke(taskId: Int): Flow<Task?> {
+        return taskRepository.getTaskStream(taskId)
     }
 }

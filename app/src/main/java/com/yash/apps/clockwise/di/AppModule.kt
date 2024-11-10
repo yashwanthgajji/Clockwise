@@ -13,14 +13,26 @@ import com.yash.apps.clockwise.data.repository.OfflineTaskRepository
 import com.yash.apps.clockwise.domain.repository.RecordRepository
 import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import com.yash.apps.clockwise.domain.repository.TaskRepository
+import com.yash.apps.clockwise.domain.usecases.record.DeleteRecord
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetails
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsBySubTask
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsByTask
 import com.yash.apps.clockwise.domain.usecases.record.InsertRecord
 import com.yash.apps.clockwise.domain.usecases.record.RecordUseCases
+import com.yash.apps.clockwise.domain.usecases.record.UpdateRecord
+import com.yash.apps.clockwise.domain.usecases.subtask.DeleteSubTask
+import com.yash.apps.clockwise.domain.usecases.subtask.GetSubTask
+import com.yash.apps.clockwise.domain.usecases.subtask.GetSubTaskByTask
+import com.yash.apps.clockwise.domain.usecases.subtask.GetSubTasks
+import com.yash.apps.clockwise.domain.usecases.subtask.InsertSubTask
+import com.yash.apps.clockwise.domain.usecases.subtask.SubTaskUseCases
+import com.yash.apps.clockwise.domain.usecases.subtask.UpdateSubTask
+import com.yash.apps.clockwise.domain.usecases.task.DeleteTask
+import com.yash.apps.clockwise.domain.usecases.task.GetTask
 import com.yash.apps.clockwise.domain.usecases.task.GetTasks
 import com.yash.apps.clockwise.domain.usecases.task.InsertTask
 import com.yash.apps.clockwise.domain.usecases.task.TaskUseCases
+import com.yash.apps.clockwise.domain.usecases.task.UpdateTask
 import com.yash.apps.clockwise.util.Constants.TASK_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -83,7 +95,23 @@ object AppModule {
     fun provideTaskUseCases(taskRepository: TaskRepository): TaskUseCases {
         return TaskUseCases(
             getTasks = GetTasks(taskRepository),
-            insertTask = InsertTask(taskRepository)
+            getTask = GetTask(taskRepository),
+            insertTask = InsertTask(taskRepository),
+            updateTask = UpdateTask(taskRepository),
+            deleteTask = DeleteTask(taskRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSubTaskUseCases(subTaskRepository: SubTaskRepository): SubTaskUseCases {
+        return SubTaskUseCases(
+            getSubTasks = GetSubTasks(subTaskRepository),
+            getSubTask = GetSubTask(subTaskRepository),
+            getSubTaskByTask = GetSubTaskByTask(subTaskRepository),
+            insertSubTask = InsertSubTask(subTaskRepository),
+            updateSubTask = UpdateSubTask(subTaskRepository),
+            deleteSubTask = DeleteSubTask(subTaskRepository)
         )
     }
 
@@ -94,7 +122,9 @@ object AppModule {
             getRecordDetails = GetRecordDetails(recordRepository),
             getRecordDetailsByTask = GetRecordDetailsByTask(recordRepository),
             getRecordDetailsBySubTask = GetRecordDetailsBySubTask(recordRepository),
-            insertRecord = InsertRecord(recordRepository)
+            insertRecord = InsertRecord(recordRepository),
+            updateRecord = UpdateRecord(recordRepository),
+            deleteRecord = DeleteRecord(recordRepository)
         )
     }
 }

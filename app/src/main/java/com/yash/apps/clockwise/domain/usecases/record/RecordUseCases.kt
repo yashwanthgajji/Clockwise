@@ -4,5 +4,7 @@ data class RecordUseCases(
     val getRecordDetails: GetRecordDetails,
     val getRecordDetailsByTask: GetRecordDetailsByTask,
     val getRecordDetailsBySubTask: GetRecordDetailsBySubTask,
-    val insertRecord: InsertRecord
+    val insertRecord: InsertRecord,
+    val updateRecord: UpdateRecord,
+    val deleteRecord: DeleteRecord
 )

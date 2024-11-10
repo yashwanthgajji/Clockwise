@@ -62,7 +62,7 @@ fun TaskCard(
                 pressedElevation = 8.dp
             )
         ) {
-            TaskItem(name = task.name)
+            TaskItem(name = task.tName)
         }
         AnimatedVisibility(
             visible = isPressed.value,
@@ -93,7 +93,7 @@ fun TaskCard(
                 }
                 repeat(subTasks.size) { index ->
                     TaskItem(
-                        name = subTasks.get(index).name
+                        name = subTasks.get(index).sName
                     )
                 }
             }
@@ -153,8 +153,8 @@ fun TaskCardPreview() {
         TaskCard(
             task = Task(1, "Learning"),
             subTasks = listOf(
-                SubTask(1, "Leetcode", taskId = 1),
-                SubTask(2, "Android", taskId = 1)
+                SubTask(1, "Leetcode", sTaskId = 1),
+                SubTask(2, "Android", sTaskId = 1)
             )
         )
     }

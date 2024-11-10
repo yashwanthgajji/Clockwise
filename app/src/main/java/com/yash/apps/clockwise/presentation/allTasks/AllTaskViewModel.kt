@@ -28,7 +28,7 @@ class AllTaskViewModel @Inject constructor(
 
     fun addNewTask(taskName: String) {
         viewModelScope.launch {
-            taskUseCases.insertTask(Task(name = taskName))
+            taskUseCases.insertTask(Task(tName = taskName))
         }
     }
 }

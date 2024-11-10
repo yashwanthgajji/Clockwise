@@ -19,10 +19,10 @@ interface SubTaskDao {
     suspend fun delete(subTask: SubTask)
     @Query("SELECT * FROM subTasks")
     fun getAllSubTasks(): Flow<List<SubTask>>
-    @Query("SELECT * FROM subtasks WHERE id = :id")
+    @Query("SELECT * FROM subtasks WHERE sId = :id")
     fun getSubTask(id: Int): Flow<SubTask>
-    @Query("SELECT * FROM subTasks WHERE taskId = :taskId")
+    @Query("SELECT * FROM subTasks WHERE sTaskId = :taskId")
     fun getAllSubTasksOfTask(taskId: Int): Flow<List<SubTask>>
-    @Query("SELECT name FROM subTasks WHERE id = :id")
+    @Query("SELECT sName FROM subTasks WHERE sId = :id")
     fun getSubTaskName(id: Int): String
 }

@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tasks")
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Int = 0,
-    @ColumnInfo(name = "name")
-    val name: String,
-    @ColumnInfo(name = "duration")
-    val duration: String? = null,
-    @ColumnInfo(name = "isCompleted")
-    val isCompleted: Boolean = false
+    @ColumnInfo(name = "tId")
+    val tId: Int = 0,
+    @ColumnInfo(name = "tName")
+    val tName: String,
+    @ColumnInfo(name = "tDuration")
+    val tDuration: Long? = null,
+    @ColumnInfo(name = "tIsCompleted")
+    val tIsCompleted: Boolean = false
 )

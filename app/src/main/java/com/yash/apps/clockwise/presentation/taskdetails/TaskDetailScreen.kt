@@ -1,6 +1,5 @@
 package com.yash.apps.clockwise.presentation.taskdetails
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,14 +20,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.presentation.taskdetails.components.RecordList
 import com.yash.apps.clockwise.presentation.taskdetails.components.TaskDetailTabRow
-import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun TaskDetailScreen(modifier: Modifier = Modifier) {
+fun TaskDetailScreen(modifier: Modifier = Modifier, taskDetailUiState: TaskDetailUiState) {
     var selectedTab by rememberSaveable { mutableIntStateOf(0) }
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
@@ -51,18 +48,9 @@ fun TaskDetailScreen(modifier: Modifier = Modifier) {
         TaskDetailTabRow(selectedTab = selectedTab, onTabSelected = { selectedTab = it })
         AnimatedContent(targetState = selectedTab, label = "") { tab ->
             when(tab) {
-                0 -> { RecordList() }
+                0 -> { RecordList(modifier = Modifier.fillMaxSize(), recordDetails = taskDetailUiState.recordDetails) }
                 2 -> {}
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun TaskDetailScreenPreview() {
-    ClockwiseTheme {
-        TaskDetailScreen()
     }
 }

@@ -1,5 +1,7 @@
 package com.yash.apps.clockwise.presentation.timeline
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yash.apps.clockwise.domain.repository.RecordRepository
@@ -30,28 +32,30 @@ class TimelineViewModel @Inject constructor(
         }
     }
 
-    val timelineUiState: StateFlow<TimelineUiState> =
-        recordRepository.getRecordByTaskIdStream(1).map { records ->
-            TimelineUiState(
-                records.groupBy { it.date }.map { (date, recordsForDate) ->
-                    TimelineDay(
-                        date = date.toString(),
-                        recordDetails = recordsForDate.map { record ->
-                            RecordDetails(
-                                taskName = fetchTaskNameById(record.taskId),
-                                subTaskName = fetchSubTaskNameById(record.subTaskId),
-                                date = record.date,
-                                duration = record.duration
-                            )
-                        }
-                    )
-                }
-            )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-            initialValue = TimelineUiState()
-        )
+    val timelineUiState by mutableStateOf(TimelineUiState())
+
+//    val timelineUiState: StateFlow<TimelineUiState> =
+//        recordRepository.getRecordByTaskIdStream(1).map { records ->
+//            TimelineUiState(
+//                records.groupBy { it.date }.map { (date, recordsForDate) ->
+//                    TimelineDay(
+//                        date = date.toString(),
+//                        recordDetails = recordsForDate.map { record ->
+//                            RecordDetails(
+//                                taskName = fetchTaskNameById(record.taskId),
+//                                subTaskName = fetchSubTaskNameById(record.subTaskId),
+//                                date = record.date,
+//                                duration = record.duration
+//                            )
+//                        }
+//                    )
+//                }
+//            )
+//        }.stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+//            initialValue = TimelineUiState()
+//        )
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L

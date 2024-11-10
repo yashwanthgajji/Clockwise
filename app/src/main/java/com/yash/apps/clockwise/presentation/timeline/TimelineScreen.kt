@@ -19,13 +19,12 @@ fun TimelineScreen(
     bottomBarContent: @Composable () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val timelineUiState by viewModel.timelineUiState.collectAsState()
     Scaffold(
         topBar = {
             TimelineScreenTopBar(title = "Timeline", scrollBehavior = scrollBehavior)
         },
         bottomBar = bottomBarContent
     ) { innerPadding ->
-        TimelineList(days = timelineUiState.days, modifier = modifier.padding(innerPadding))
+        TimelineList(days = viewModel.timelineUiState.days, modifier = modifier.padding(innerPadding))
     }
 }

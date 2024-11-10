@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.yash.apps.clockwise.domain.model.Record
+import com.yash.apps.clockwise.domain.model.RecordDetails
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -17,10 +18,27 @@ interface RecordDao {
     suspend fun update(record: Record)
     @Delete
     suspend fun delete(record: Record)
-    @Query("SELECT * FROM records")
-    fun getAllRecords(): Flow<List<Record>>
-    @Query("SELECT * FROM records WHERE recordId = :recordId")
-    fun getRecord(recordId: Int): Flow<Record>
-    @Query("SELECT * FROM records WHERE taskId = :taskId")
-    fun getRecordByTaskId(taskId: Int): Flow<List<Record>>
+//    @Query("SELECT * FROM records")
+//    fun getAllRecords(): Flow<List<Record>>
+//    @Query("SELECT * FROM records WHERE rId = :id")
+//    fun getRecord(id: Int): Flow<Record>
+//    @Query("SELECT * FROM records WHERE rTaskId = :taskId")
+//    fun getRecordByTaskId(taskId: Int): Flow<List<Record>>
+    @Query("""SELECT r.rId, r.rDate, r.rStartTime, r.rEndTime, rDuration, t.tId, t.tName, s.sId, s.sName
+        from records r 
+        INNER JOIN tasks t ON r.rTaskId = t.tId
+        LEFT OUTER JOIN subTasks s ON r.rSubTaskId = s.sId""")
+    fun getAllRecordDetails(): Flow<List<RecordDetails>>
+    @Query("""SELECT r.rId, r.rDate, r.rStartTime, r.rEndTime, rDuration, t.tId, t.tName, s.sId, s.sName
+        from records r 
+        INNER JOIN tasks t ON r.rTaskId = t.tId
+        LEFT OUTER JOIN subTasks s ON r.rSubTaskId = s.sId
+        WHERE t.tId = :taskId""")
+    fun getRecordDetailsByTask(taskId: Int): Flow<List<RecordDetails>>
+    @Query("""SELECT r.rId, r.rDate, r.rStartTime, r.rEndTime, rDuration, t.tId, t.tName, s.sId, s.sName
+        from records r 
+        INNER JOIN tasks t ON r.rTaskId = t.tId
+        INNER JOIN subTasks s ON r.rSubTaskId = s.sId
+        WHERE s.sId = :subTaskId""")
+    fun getRecordDetailsBySubTask(subTaskId: Int): Flow<List<RecordDetails>>
 }

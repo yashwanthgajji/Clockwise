@@ -3,6 +3,7 @@ package com.yash.apps.clockwise.di
 import android.app.Application
 import androidx.room.Room
 import com.yash.apps.clockwise.data.local.TaskDatabase
+import com.yash.apps.clockwise.data.local.TaskTypeConverter
 import com.yash.apps.clockwise.data.local.record.RecordDao
 import com.yash.apps.clockwise.data.local.subtask.SubTaskDao
 import com.yash.apps.clockwise.data.local.task.TaskDao
@@ -12,7 +13,10 @@ import com.yash.apps.clockwise.data.repository.OfflineTaskRepository
 import com.yash.apps.clockwise.domain.repository.RecordRepository
 import com.yash.apps.clockwise.domain.repository.SubTaskRepository
 import com.yash.apps.clockwise.domain.repository.TaskRepository
-import com.yash.apps.clockwise.domain.usecases.record.GetRecordsByTask
+import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetails
+import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsBySubTask
+import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsByTask
+import com.yash.apps.clockwise.domain.usecases.record.InsertRecord
 import com.yash.apps.clockwise.domain.usecases.record.RecordUseCases
 import com.yash.apps.clockwise.domain.usecases.task.GetTasks
 import com.yash.apps.clockwise.domain.usecases.task.InsertTask
@@ -35,7 +39,7 @@ object AppModule {
             context = application,
             klass = TaskDatabase::class.java,
             name = TASK_DATABASE_NAME
-        ).fallbackToDestructiveMigration().build()
+        ).addTypeConverter(TaskTypeConverter()).fallbackToDestructiveMigration().build()
     }
 
     @Provides
@@ -58,19 +62,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTaskRepository(taskDao: TaskDao):TaskRepository {
+    fun provideTaskRepository(taskDao: TaskDao): TaskRepository {
         return OfflineTaskRepository(taskDao = taskDao)
     }
 
     @Provides
     @Singleton
-    fun provideSubTaskRepository(subTaskDao: SubTaskDao):SubTaskRepository {
+    fun provideSubTaskRepository(subTaskDao: SubTaskDao): SubTaskRepository {
         return OfflineSubTaskRepository(subTaskDao = subTaskDao)
     }
 
     @Provides
     @Singleton
-    fun provideRecordRepository(recordDao: RecordDao):RecordRepository {
+    fun provideRecordRepository(recordDao: RecordDao): RecordRepository {
         return OfflineRecordRepository(recordDao = recordDao)
     }
 
@@ -86,6 +90,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRecordUseCases(recordRepository: RecordRepository): RecordUseCases {
-        return RecordUseCases(getRecordsByTask = GetRecordsByTask(recordRepository))
+        return RecordUseCases(
+            getRecordDetails = GetRecordDetails(recordRepository),
+            getRecordDetailsByTask = GetRecordDetailsByTask(recordRepository),
+            getRecordDetailsBySubTask = GetRecordDetailsBySubTask(recordRepository),
+            insertRecord = InsertRecord(recordRepository)
+        )
     }
 }

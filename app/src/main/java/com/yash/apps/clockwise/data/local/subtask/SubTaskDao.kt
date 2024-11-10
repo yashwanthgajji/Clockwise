@@ -23,6 +23,4 @@ interface SubTaskDao {
     fun getSubTask(id: Int): Flow<SubTask>
     @Query("SELECT * FROM subTasks WHERE sTaskId = :taskId")
     fun getAllSubTasksOfTask(taskId: Int): Flow<List<SubTask>>
-    @Query("SELECT sName FROM subTasks WHERE sId = :id")
-    fun getSubTaskName(id: Int): String
 }

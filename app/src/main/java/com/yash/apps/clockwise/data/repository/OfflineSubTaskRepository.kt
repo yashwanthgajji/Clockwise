@@ -14,5 +14,4 @@ class OfflineSubTaskRepository(private val subTaskDao: SubTaskDao): SubTaskRepos
     override fun getAllSubTasksOfTaskStream(taskId: Int): Flow<List<SubTask>> {
         return subTaskDao.getAllSubTasksOfTask(taskId)
     }
-    override fun getSubTaskNameById(id: Int): String = subTaskDao.getSubTaskName(id)
 }

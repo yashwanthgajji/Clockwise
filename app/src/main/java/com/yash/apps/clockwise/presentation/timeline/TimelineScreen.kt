@@ -15,7 +15,7 @@ import com.yash.apps.clockwise.presentation.timeline.components.TimelineScreenTo
 @Composable
 fun TimelineScreen(
     modifier: Modifier = Modifier,
-    viewModel: TimelineViewModel,
+    timelineUiState: TimelineUiState,
     bottomBarContent: @Composable () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -25,6 +25,6 @@ fun TimelineScreen(
         },
         bottomBar = bottomBarContent
     ) { innerPadding ->
-        TimelineList(days = viewModel.timelineUiState.days, modifier = modifier.padding(innerPadding))
+        TimelineList(days = timelineUiState.days, modifier = modifier.padding(innerPadding))
     }
 }

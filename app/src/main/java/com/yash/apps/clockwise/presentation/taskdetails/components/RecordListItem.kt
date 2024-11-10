@@ -78,9 +78,9 @@ private fun RecordListItemPreview() {
             recordDetails = RecordDetails(
                 rId = 1,
                 rDate = Date(),
-                rStartTime = Date(),
+                rStartTime = Date(Date().time - (70 * 60 * 1000)),
                 rEndTime = Date(),
-                rDuration = Date().time,
+                rDuration = (70 * 60 * 1000),
                 tId = 1,
                 tName = "Studying",
                 sId = 2,
@@ -99,9 +99,9 @@ private fun RecordListItemWithoutSubTaskPreview() {
             recordDetails = RecordDetails(
                 rId = 1,
                 rDate = Date(),
-                rStartTime = Date(),
+                rStartTime = Date(Date().time - (135 * 60 * 1000)),
                 rEndTime = Date(),
-                rDuration = Date().time,
+                rDuration = (70 * 60 * 1000) + (25 * 1000),
                 tId = 1,
                 tName = "Studying"
             )

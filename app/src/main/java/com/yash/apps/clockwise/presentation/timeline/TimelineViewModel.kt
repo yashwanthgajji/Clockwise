@@ -1,63 +1,40 @@
 package com.yash.apps.clockwise.presentation.timeline
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yash.apps.clockwise.domain.repository.RecordRepository
-import com.yash.apps.clockwise.domain.repository.SubTaskRepository
-import com.yash.apps.clockwise.domain.repository.TaskRepository
+import com.yash.apps.clockwise.domain.usecases.record.RecordUseCases
+import com.yash.apps.clockwise.util.Constants.FULL_DATE_FORMAT
+import com.yash.apps.clockwise.util.DateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
-    private val taskRepository: TaskRepository,
-    private val subTaskRepository: SubTaskRepository,
-    private val recordRepository: RecordRepository
+    private val recordUseCases: RecordUseCases
 ): ViewModel() {
-    private fun fetchTaskNameById(taskId: Int): String {
-        return taskRepository.getTaskNameById(taskId)
+    private var _timelineUiState = MutableStateFlow(TimelineUiState())
+    var timelineUiState: StateFlow<TimelineUiState> = _timelineUiState.asStateFlow()
+
+    init {
+        fetchAllRecordDetails()
     }
 
-    private fun fetchSubTaskNameById(subTaskId: Int?): String {
-        return if (subTaskId == null) {
-            ""
-        } else {
-            subTaskRepository.getSubTaskNameById(subTaskId)
+    private fun fetchAllRecordDetails() {
+        viewModelScope.launch {
+            recordUseCases.getRecordDetails().collect { recordDetails ->
+                _timelineUiState.value = _timelineUiState.value.copy(
+                    days = recordDetails.groupBy { it.rDate }.map { (date, recordsForDate) ->
+                        TimelineDay(
+                            date = DateFormatter.formatDate(date, FULL_DATE_FORMAT),
+                            recordDetails = recordsForDate
+                        )
+                    }
+                )
+            }
         }
-    }
-
-    val timelineUiState by mutableStateOf(TimelineUiState())
-
-//    val timelineUiState: StateFlow<TimelineUiState> =
-//        recordRepository.getRecordByTaskIdStream(1).map { records ->
-//            TimelineUiState(
-//                records.groupBy { it.date }.map { (date, recordsForDate) ->
-//                    TimelineDay(
-//                        date = date.toString(),
-//                        recordDetails = recordsForDate.map { record ->
-//                            RecordDetails(
-//                                taskName = fetchTaskNameById(record.taskId),
-//                                subTaskName = fetchSubTaskNameById(record.subTaskId),
-//                                date = record.date,
-//                                duration = record.duration
-//                            )
-//                        }
-//                    )
-//                }
-//            )
-//        }.stateIn(
-//            scope = viewModelScope,
-//            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-//            initialValue = TimelineUiState()
-//        )
-
-    companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
     }
 }

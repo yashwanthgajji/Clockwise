@@ -21,6 +21,4 @@ interface TaskDao {
     fun getAllTasks(): Flow<List<Task>>
     @Query("SELECT * FROM tasks WHERE tId = :id")
     fun getTask(id: Int): Flow<Task>
-    @Query("SELECT tName FROM tasks WHERE tId = :id")
-    fun getTaskName(id: Int): String
 }

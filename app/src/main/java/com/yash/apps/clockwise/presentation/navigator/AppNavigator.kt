@@ -74,7 +74,8 @@ fun AppNavigator(modifier: Modifier = Modifier) {
     ) {
         composable(route = Route.TimelineScreen.route) {
             val viewModel: TimelineViewModel = hiltViewModel()
-            TimelineScreen(viewModel = viewModel, bottomBarContent = bottomBar)
+            val uiState = viewModel.timelineUiState.collectAsState()
+            TimelineScreen(timelineUiState = uiState.value, bottomBarContent = bottomBar)
         }
         composable(route = Route.AllTasksScreen.route) {
             val viewModel: AllTaskViewModel = hiltViewModel()

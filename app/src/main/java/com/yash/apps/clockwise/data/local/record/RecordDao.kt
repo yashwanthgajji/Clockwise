@@ -18,12 +18,6 @@ interface RecordDao {
     suspend fun update(record: Record)
     @Delete
     suspend fun delete(record: Record)
-//    @Query("SELECT * FROM records")
-//    fun getAllRecords(): Flow<List<Record>>
-//    @Query("SELECT * FROM records WHERE rId = :id")
-//    fun getRecord(id: Int): Flow<Record>
-//    @Query("SELECT * FROM records WHERE rTaskId = :taskId")
-//    fun getRecordByTaskId(taskId: Int): Flow<List<Record>>
     @Query("""SELECT r.rId, r.rDate, r.rStartTime, r.rEndTime, rDuration, t.tId, t.tName, s.sId, s.sName
         from records r 
         INNER JOIN tasks t ON r.rTaskId = t.tId

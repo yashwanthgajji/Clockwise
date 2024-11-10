@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun RecordItem(
+fun TimelineRecordItem(
     taskName: String,
     subTaskName: String,
     totalDuration: String,
@@ -78,6 +78,6 @@ fun RecordItem(
 @Composable
 private fun RecordItemPreview() {
     ClockwiseTheme {
-        RecordItem("Learning", "Leetcode", "20:18:59", onItemClick = { })
+        TimelineRecordItem("Learning", "Leetcode", "20:18:59", onItemClick = { })
     }
 }

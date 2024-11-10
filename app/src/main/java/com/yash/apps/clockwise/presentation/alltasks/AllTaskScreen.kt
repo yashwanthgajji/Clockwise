@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.presentation.allTasks
+package com.yash.apps.clockwise.presentation.alltasks
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
@@ -6,8 +6,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.yash.apps.clockwise.presentation.allTasks.components.NewTaskFabComponent
-import com.yash.apps.clockwise.presentation.allTasks.components.TaskList
+import com.yash.apps.clockwise.presentation.alltasks.components.NewTaskFabComponent
+import com.yash.apps.clockwise.presentation.alltasks.components.TaskList
 
 @Composable
 fun AllTaskScreen(

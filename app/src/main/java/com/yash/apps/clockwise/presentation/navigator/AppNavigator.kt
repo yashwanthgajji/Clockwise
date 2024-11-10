@@ -1,5 +1,9 @@
 package com.yash.apps.clockwise.presentation.navigator
 
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,11 +19,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.yash.apps.clockwise.R
-import com.yash.apps.clockwise.presentation.allTasks.AllTaskScreen
-import com.yash.apps.clockwise.presentation.allTasks.AllTaskViewModel
+import com.yash.apps.clockwise.domain.model.Task
+import com.yash.apps.clockwise.presentation.alltasks.AllTaskScreen
+import com.yash.apps.clockwise.presentation.alltasks.AllTaskViewModel
 import com.yash.apps.clockwise.presentation.navgraph.Route
 import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNavigation
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
+import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
+import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailViewModel
 import com.yash.apps.clockwise.presentation.timeline.TimelineScreen
 import com.yash.apps.clockwise.presentation.timeline.TimelineViewModel
 
@@ -33,32 +40,26 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         )
     }
     val navController = rememberNavController()
-    val backStackState = navController.currentBackStackEntryAsState().value
     var selectedItem by rememberSaveable {
         mutableIntStateOf(0)
-    }
-    selectedItem = remember(key1 = backStackState) {
-        when (backStackState?.destination?.route) {
-            Route.TimelineScreen.route -> 0
-            Route.AllTasksScreen.route -> 1
-            Route.ReportsScreen.route -> 2
-            else -> 0
-        }
     }
     val bottomBar: @Composable () -> Unit = {
         AppBottomNavigation(
             items = bottomNavigationItems,
             selectedItem = selectedItem,
             onItemClick = { index ->
+                selectedItem = index
                 when (index) {
                     0 -> navigateToTab(
                         navController = navController,
                         route = Route.TimelineScreen.route
                     )
+
                     1 -> navigateToTab(
                         navController = navController,
                         route = Route.AllTasksScreen.route
                     )
+
                     2 -> navigateToTab(
                         navController = navController,
                         route = Route.ReportsScreen.route
@@ -72,17 +73,44 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = Route.TimelineScreen.route
     ) {
-        composable(route = Route.TimelineScreen.route) {
+        composable(
+            route = Route.TimelineScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = FastOutLinearInEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = FastOutLinearInEasing))
+            }
+        ) {
             val viewModel: TimelineViewModel = hiltViewModel()
             val uiState = viewModel.timelineUiState.collectAsState()
             TimelineScreen(timelineUiState = uiState.value, bottomBarContent = bottomBar)
         }
-        composable(route = Route.AllTasksScreen.route) {
+        composable(
+            route = Route.AllTasksScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = FastOutLinearInEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = FastOutLinearInEasing))
+            }
+        ) {
             val viewModel: AllTaskViewModel = hiltViewModel()
             AllTaskScreen(viewModel = viewModel, bottomBarContent = bottomBar)
         }
         composable(route = Route.ReportsScreen.route) {
 
+        }
+        composable(route = Route.TaskDetailScreen.route) {
+            val viewModel: TaskDetailViewModel = hiltViewModel()
+            val uiState = viewModel.taskDetailUiState.collectAsState()
+            navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("task")
+                ?.let { task ->
+                    TaskDetailScreen(
+                        taskDetailUiState = uiState.value,
+                        task = task
+                    )
+                }
         }
     }
 }
@@ -99,7 +127,7 @@ private fun navigateToTab(navController: NavController, route: String) {
     }
 }
 
-//private fun navigateToDetails(navController: NavController, fountain: Fountain) {
-//    navController.currentBackStackEntry?.savedStateHandle?.set("fountain", fountain)
-//    navController.navigate(route = Route.TaskDetailScreen.route)
-//}
+private fun navigateToDetails(navController: NavController, task: Task) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("task", task)
+    navController.navigate(route = Route.TaskDetailScreen.route)
+}

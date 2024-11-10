@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.presentation.allTasks
+package com.yash.apps.clockwise.presentation.alltasks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

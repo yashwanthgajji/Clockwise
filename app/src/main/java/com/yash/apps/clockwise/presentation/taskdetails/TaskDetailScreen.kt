@@ -21,18 +21,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.presentation.taskdetails.components.RecordList
 import com.yash.apps.clockwise.presentation.taskdetails.components.TaskDetailTabRow
 
 @Composable
-fun TaskDetailScreen(modifier: Modifier = Modifier, taskDetailUiState: TaskDetailUiState) {
+fun TaskDetailScreen(
+    modifier: Modifier = Modifier,
+    taskDetailUiState: TaskDetailUiState,
+    task: Task
+) {
     var selectedTab by rememberSaveable { mutableIntStateOf(0) }
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "Task Name", style = MaterialTheme.typography.headlineLarge)
+        Text(text = task.tName, style = MaterialTheme.typography.headlineLarge)
         Button(onClick = {}) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -47,8 +54,13 @@ fun TaskDetailScreen(modifier: Modifier = Modifier, taskDetailUiState: TaskDetai
         }
         TaskDetailTabRow(selectedTab = selectedTab, onTabSelected = { selectedTab = it })
         AnimatedContent(targetState = selectedTab, label = "") { tab ->
-            when(tab) {
-                0 -> { RecordList(modifier = Modifier.fillMaxSize(), recordDetails = taskDetailUiState.recordDetails) }
+            when (tab) {
+                0 -> {
+                    RecordList(
+                        modifier = Modifier.fillMaxSize(),
+                        recordDetails = taskDetailUiState.recordDetails
+                    )
+                }
                 2 -> {}
             }
         }

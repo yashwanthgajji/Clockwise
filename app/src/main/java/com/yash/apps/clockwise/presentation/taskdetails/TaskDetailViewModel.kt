@@ -18,7 +18,7 @@ class TaskDetailViewModel @Inject constructor(
     val taskDetailUiState: StateFlow<TaskDetailUiState> = _taskDetailUiState.asStateFlow()
 
     init {
-        fetchAllRecordsByTask(1)
+        fetchAllRecordsByTask(0)
     }
 
     private fun fetchAllRecordsByTask(taskId: Int) {

@@ -9,7 +9,7 @@ import java.util.Date
 data class Record(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rId")
-    val rId: Int,
+    val rId: Int = 0,
     @ColumnInfo(name = "rDate")
     val rDate: Date,
     @ColumnInfo(name = "rStartTime")

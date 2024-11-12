@@ -37,6 +37,7 @@ fun TaskDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskDetailViewModel,
     task: Task,
+    onNewRecordClick: (Task) -> Unit,
     onSubTaskClick: (SubTask) -> Unit
 ) {
     viewModel.fetchAllRecordsByTask(taskId = task.tId)
@@ -76,7 +77,7 @@ fun TaskDetailScreen(
                     Text(text = "Start Project")
                 }
             }
-            OutlinedButton(onClick = {}) {
+            OutlinedButton(onClick = { onNewRecordClick(task) }) {
                 Text(text = "New Record")
             }
             TaskDetailTabRow(

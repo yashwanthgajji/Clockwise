@@ -59,7 +59,7 @@ fun TimelineRecordItem(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.onTertiaryContainer)
+                    .background(MaterialTheme.colorScheme.background)
             ) {
                 Text(
                     text = totalDuration,

@@ -25,6 +25,8 @@ import com.yash.apps.clockwise.presentation.alltasks.AllTaskViewModel
 import com.yash.apps.clockwise.presentation.navgraph.Route
 import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNavigation
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
+import com.yash.apps.clockwise.presentation.newrecord.NewRecordScreen
+import com.yash.apps.clockwise.presentation.newrecord.NewRecordViewModel
 import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailScreen
 import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailViewModel
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
@@ -131,6 +133,9 @@ fun AppNavigator(modifier: Modifier = Modifier) {
                     TaskDetailScreen(
                         viewModel = viewModel,
                         task = task,
+                        onNewRecordClick = {
+                            navigateToNewRecord(navController = navController, task = it)
+                        },
                         onSubTaskClick = { navigateToSubTaskDetails(navController, subTask = it) }
                     )
                 }
@@ -152,6 +157,28 @@ fun AppNavigator(modifier: Modifier = Modifier) {
                         subTask = subTask
                     )
                 }
+        }
+        composable(
+            route = Route.NewRecordScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
+            }
+        ) {
+            val viewModel: NewRecordViewModel = hiltViewModel()
+            val task =
+                navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("newRecordTask")
+            val subTask =
+                navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>("newRecordSubTask")
+            task?.let { it1 ->
+                viewModel.setTaskAndSubTask(it1, subTask)
+            }
+            NewRecordScreen(
+                viewModel = viewModel,
+                onBackPress = { navController.navigateUp() }
+            )
         }
     }
 }
@@ -176,4 +203,16 @@ private fun navigateToTaskDetails(navController: NavController, task: Task) {
 private fun navigateToSubTaskDetails(navController: NavController, subTask: SubTask) {
     navController.currentBackStackEntry?.savedStateHandle?.set("subTaskDetail", subTask)
     navController.navigate(route = Route.SubTaskDetailScreen.route)
+}
+
+private fun navigateToNewRecord(
+    navController: NavController,
+    task: Task,
+    subTask: SubTask? = null
+) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("newRecordTask", task)
+    subTask?.let {
+        navController.currentBackStackEntry?.savedStateHandle?.set("newRecordSubTask", subTask)
+    }
+    navController.navigate(route = Route.NewRecordScreen.route)
 }

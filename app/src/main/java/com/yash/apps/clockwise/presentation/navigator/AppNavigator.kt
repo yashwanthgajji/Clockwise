@@ -19,12 +19,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.yash.apps.clockwise.R
+import com.yash.apps.clockwise.domain.model.SubTask
 import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.presentation.alltasks.AllTaskScreen
 import com.yash.apps.clockwise.presentation.alltasks.AllTaskViewModel
 import com.yash.apps.clockwise.presentation.navgraph.Route
 import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNavigation
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
+import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailScreen
+import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailViewModel
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailViewModel
 import com.yash.apps.clockwise.presentation.timeline.TimelineScreen
@@ -96,19 +99,33 @@ fun AppNavigator(modifier: Modifier = Modifier) {
             }
         ) {
             val viewModel: AllTaskViewModel = hiltViewModel()
-            AllTaskScreen(viewModel = viewModel, bottomBarContent = bottomBar)
+            AllTaskScreen(
+                viewModel = viewModel,
+                onTaskClick = { navigateToTaskDetails(navController, task = it) },
+                bottomBarContent = bottomBar
+            )
         }
         composable(route = Route.ReportsScreen.route) {
 
         }
         composable(route = Route.TaskDetailScreen.route) {
             val viewModel: TaskDetailViewModel = hiltViewModel()
-            val uiState = viewModel.taskDetailUiState.collectAsState()
-            navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("task")
+            navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("taskDetail")
                 ?.let { task ->
                     TaskDetailScreen(
-                        taskDetailUiState = uiState.value,
-                        task = task
+                        viewModel = viewModel,
+                        task = task,
+                        onSubTaskClick = { navigateToSubTaskDetails(navController, subTask = it) }
+                    )
+                }
+        }
+        composable(route = Route.SubTaskDetailScreen.route) {
+            val viewModel: SubTaskDetailViewModel = hiltViewModel()
+            navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>("subTaskDetail")
+                ?.let { subTask ->
+                    SubTaskDetailScreen(
+                        viewModel = viewModel,
+                        subTask = subTask
                     )
                 }
         }
@@ -127,7 +144,12 @@ private fun navigateToTab(navController: NavController, route: String) {
     }
 }
 
-private fun navigateToDetails(navController: NavController, task: Task) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("task", task)
+private fun navigateToTaskDetails(navController: NavController, task: Task) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("taskDetail", task)
     navController.navigate(route = Route.TaskDetailScreen.route)
+}
+
+private fun navigateToSubTaskDetails(navController: NavController, subTask: SubTask) {
+    navController.currentBackStackEntry?.savedStateHandle?.set("subTaskDetail", subTask)
+    navController.navigate(route = Route.SubTaskDetailScreen.route)
 }

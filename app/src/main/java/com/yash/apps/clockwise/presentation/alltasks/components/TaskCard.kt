@@ -27,8 +27,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,29 +40,31 @@ import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.domain.model.SubTask
 import com.yash.apps.clockwise.domain.model.Task
+import com.yash.apps.clockwise.presentation.common.TaskItem
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
 fun TaskCard(
     modifier: Modifier = Modifier,
     task: Task,
-    subTasks: List<SubTask> = emptyList()
+    subTasks: List<SubTask> = emptyList(),
+    onTaskClick: (Task) -> Unit
 ) {
-    var isPressed = rememberSaveable { mutableStateOf(false) }
+    var isPressed by rememberSaveable { mutableStateOf(false) }
     Column(modifier = modifier) {
         Card(
             modifier = Modifier
-                .clickable { isPressed.value = !isPressed.value }
+                .clickable { isPressed = !isPressed }
                 .clip(MaterialTheme.shapes.large),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp,
                 pressedElevation = 8.dp
             )
         ) {
-            TaskItem(name = task.tName)
+            TaskItem(name = task.tName, onMoreClick = { onTaskClick(task) })
         }
         AnimatedVisibility(
-            visible = isPressed.value,
+            visible = isPressed,
             enter = fadeIn(
                 animationSpec = spring(
                     dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -88,54 +92,11 @@ fun TaskCard(
                 }
                 repeat(subTasks.size) { index ->
                     TaskItem(
-                        name = subTasks.get(index).sName
+                        name = subTasks[index].sName,
+                        onMoreClick = {}
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun TaskItem(name: String, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(text = name, modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = { },
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.small),
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = MaterialTheme.colorScheme.background
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Filled.PlayArrow,
-                contentDescription = "start Task $name",
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(24.dp)
-            )
-        }
-        IconButton(
-            onClick = { },
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.small),
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = MaterialTheme.colorScheme.background
-            )
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
-                contentDescription = "start Task $name",
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(24.dp)
-            )
         }
     }
 }
@@ -150,7 +111,8 @@ fun TaskCardPreview() {
             subTasks = listOf(
                 SubTask(1, "Leetcode", sTaskId = 1),
                 SubTask(2, "Android", sTaskId = 1)
-            )
+            ),
+            onTaskClick = {}
         )
     }
 }

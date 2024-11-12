@@ -1,8 +1,7 @@
-package com.yash.apps.clockwise.presentation.taskdetails.components
+package com.yash.apps.clockwise.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +11,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.domain.model.RecordDetails
-import com.yash.apps.clockwise.presentation.common.IconWithLabel
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 import java.util.Date
 

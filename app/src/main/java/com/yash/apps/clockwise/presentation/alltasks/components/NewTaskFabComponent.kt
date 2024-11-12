@@ -32,7 +32,7 @@ import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun NewTaskFabComponent(modifier: Modifier = Modifier, onSave: (String) -> Unit) {
+fun NewTaskFabComponent(modifier: Modifier = Modifier, label: String, onSave: (String) -> Unit) {
     var isInsertForm = rememberSaveable { mutableStateOf(false) }
     var taskName = rememberSaveable { mutableStateOf("") }
     AnimatedContent(
@@ -52,7 +52,7 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier, onSave: (String) -> Unit)
                     modifier = Modifier.fillMaxWidth(),
                     value = taskName.value,
                     onValueChange = { taskName.value = it },
-                    placeholder = { Text(text = "Enter Task Name") },
+                    placeholder = { Text(text = "Enter Name") },
                     singleLine = true
                 )
                 Row(
@@ -89,7 +89,7 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier, onSave: (String) -> Unit)
                         painter = painterResource(id = R.drawable.add_task_icon),
                         contentDescription = null,
                     )
-                    Text(text = "New Task")
+                    Text(text = label)
                 }
             }
 
@@ -101,6 +101,6 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier, onSave: (String) -> Unit)
 @Composable
 private fun NewTaskFabButton() {
     ClockwiseTheme {
-        NewTaskFabComponent(onSave = {})
+        NewTaskFabComponent(label = "New Sub Task", onSave = {})
     }
 }

@@ -21,15 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.domain.model.SubTask
+import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.presentation.common.RecordList
 
 @Composable
 fun SubTaskDetailScreen(
     modifier: Modifier = Modifier,
-    viewModel: SubTaskDetailViewModel,
-    subTask: SubTask
+    onNewRecordClick: (Task, SubTask) -> Unit,
+    viewModel: SubTaskDetailViewModel
 ) {
-    viewModel.fetchAllRecordsBySubTask(subTaskId = subTask.sId)
     val uiState = viewModel.subTaskDetailUiState.collectAsState()
     Surface(
         modifier = modifier.fillMaxSize()
@@ -43,7 +43,10 @@ fun SubTaskDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(text = subTask.sName, style = MaterialTheme.typography.headlineLarge)
+            Text(
+                text = uiState.value.subTask?.sName ?: "Sub Task",
+                style = MaterialTheme.typography.headlineLarge
+            )
             Button(onClick = {}) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -53,7 +56,13 @@ fun SubTaskDetailScreen(
                     Text(text = "Start Project")
                 }
             }
-            OutlinedButton(onClick = {}) {
+            OutlinedButton(onClick = {
+                uiState.value.let {
+                    if (it.task != null && it.subTask != null) {
+                        onNewRecordClick(it.task, it.subTask)
+                    }
+                }
+            }) {
                 Text(text = "New Record")
             }
             RecordList(

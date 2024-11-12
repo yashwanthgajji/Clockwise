@@ -20,7 +20,7 @@ fun TaskList(
     tasks: List<Task>,
     onTaskClick: (Task) -> Unit,
     subTasksMap: Map<Int, List<SubTask>>,
-    onSubTaskClick: (SubTask) -> Unit
+    onSubTaskClick: (Task, SubTask) -> Unit
 ) {
     AnimatedVisibility(tasks.isEmpty()) {
         IconWithLabel(

@@ -33,6 +33,11 @@ import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailViewModel
 import com.yash.apps.clockwise.presentation.timeline.TimelineScreen
 import com.yash.apps.clockwise.presentation.timeline.TimelineViewModel
+import com.yash.apps.clockwise.util.Constants.NEW_RECORD_SUB_TASK
+import com.yash.apps.clockwise.util.Constants.NEW_RECORD_TASK
+import com.yash.apps.clockwise.util.Constants.SUB_TASK_DETAIL_SUB_TASK
+import com.yash.apps.clockwise.util.Constants.SUB_TASK_DETAIL_TASK
+import com.yash.apps.clockwise.util.Constants.TASK_DETAIL_TASK
 
 @Composable
 fun AppNavigator(modifier: Modifier = Modifier) {
@@ -103,7 +108,9 @@ fun AppNavigator(modifier: Modifier = Modifier) {
             AllTaskScreen(
                 viewModel = viewModel,
                 onTaskClick = { navigateToTaskDetails(navController, task = it) },
-                onSubTaskClick = { navigateToSubTaskDetails(navController, subTask = it) },
+                onSubTaskClick = { task, subTask ->
+                    navigateToSubTaskDetails(navController, task = task, subTask = subTask)
+                },
                 bottomBarContent = bottomBar
             )
         }
@@ -128,17 +135,18 @@ fun AppNavigator(modifier: Modifier = Modifier) {
             }
         ) {
             val viewModel: TaskDetailViewModel = hiltViewModel()
-            navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("taskDetail")
-                ?.let { task ->
-                    TaskDetailScreen(
-                        viewModel = viewModel,
-                        task = task,
-                        onNewRecordClick = {
-                            navigateToNewRecord(navController = navController, task = it)
-                        },
-                        onSubTaskClick = { navigateToSubTaskDetails(navController, subTask = it) }
-                    )
+            val task =
+                navController.previousBackStackEntry?.savedStateHandle?.get<Task?>(TASK_DETAIL_TASK)
+            task?.let { it1 -> viewModel.setTask(it1) }
+            TaskDetailScreen(
+                viewModel = viewModel,
+                onNewRecordClick = {
+                    navigateToNewRecord(navController = navController, task = it)
+                },
+                onSubTaskClick = { t, s ->
+                    navigateToSubTaskDetails(navController, task = t, subTask = s)
                 }
+            )
         }
         composable(
             route = Route.SubTaskDetailScreen.route,
@@ -150,13 +158,25 @@ fun AppNavigator(modifier: Modifier = Modifier) {
             }
         ) {
             val viewModel: SubTaskDetailViewModel = hiltViewModel()
-            navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>("subTaskDetail")
-                ?.let { subTask ->
-                    SubTaskDetailScreen(
-                        viewModel = viewModel,
-                        subTask = subTask
+            val task = navController.previousBackStackEntry?.savedStateHandle?.get<Task?>(
+                SUB_TASK_DETAIL_TASK
+            )
+            val subTask = navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>(
+                SUB_TASK_DETAIL_SUB_TASK
+            )
+            if (task != null && subTask != null) {
+                viewModel.setSubTask(task, subTask)
+            }
+            SubTaskDetailScreen(
+                viewModel = viewModel,
+                onNewRecordClick = { t, s ->
+                    navigateToNewRecord(
+                        navController = navController,
+                        task = t,
+                        subTask = s
                     )
                 }
+            )
         }
         composable(
             route = Route.NewRecordScreen.route,
@@ -169,9 +189,10 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         ) {
             val viewModel: NewRecordViewModel = hiltViewModel()
             val task =
-                navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("newRecordTask")
-            val subTask =
-                navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>("newRecordSubTask")
+                navController.previousBackStackEntry?.savedStateHandle?.get<Task?>(NEW_RECORD_TASK)
+            val subTask = navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>(
+                NEW_RECORD_SUB_TASK
+            )
             task?.let { it1 ->
                 viewModel.setTaskAndSubTask(it1, subTask)
             }
@@ -196,12 +217,13 @@ private fun navigateToTab(navController: NavController, route: String) {
 }
 
 private fun navigateToTaskDetails(navController: NavController, task: Task) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("taskDetail", task)
+    navController.currentBackStackEntry?.savedStateHandle?.set(TASK_DETAIL_TASK, task)
     navController.navigate(route = Route.TaskDetailScreen.route)
 }
 
-private fun navigateToSubTaskDetails(navController: NavController, subTask: SubTask) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("subTaskDetail", subTask)
+private fun navigateToSubTaskDetails(navController: NavController, task: Task, subTask: SubTask) {
+    navController.currentBackStackEntry?.savedStateHandle?.set(SUB_TASK_DETAIL_TASK, task)
+    navController.currentBackStackEntry?.savedStateHandle?.set(SUB_TASK_DETAIL_SUB_TASK, subTask)
     navController.navigate(route = Route.SubTaskDetailScreen.route)
 }
 
@@ -210,9 +232,9 @@ private fun navigateToNewRecord(
     task: Task,
     subTask: SubTask? = null
 ) {
-    navController.currentBackStackEntry?.savedStateHandle?.set("newRecordTask", task)
+    navController.currentBackStackEntry?.savedStateHandle?.set(NEW_RECORD_TASK, task)
     subTask?.let {
-        navController.currentBackStackEntry?.savedStateHandle?.set("newRecordSubTask", subTask)
+        navController.currentBackStackEntry?.savedStateHandle?.set(NEW_RECORD_SUB_TASK, subTask)
     }
     navController.navigate(route = Route.NewRecordScreen.route)
 }

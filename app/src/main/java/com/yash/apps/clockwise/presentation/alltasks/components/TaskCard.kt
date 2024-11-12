@@ -36,7 +36,7 @@ fun TaskCard(
     task: Task,
     onTaskClick: (Task) -> Unit,
     subTasks: List<SubTask> = emptyList(),
-    onSubTaskClick: (SubTask) -> Unit = {}
+    onSubTaskClick: (Task, SubTask) -> Unit = {_, _ -> }
 ) {
     var isPressed by rememberSaveable { mutableStateOf(false) }
     Column(modifier = modifier) {
@@ -69,7 +69,7 @@ fun TaskCard(
                 repeat(subTasks.size) { index ->
                     TaskItem(
                         name = subTasks[index].sName,
-                        onMoreClick = { onSubTaskClick(subTasks[index]) }
+                        onMoreClick = { onSubTaskClick(task, subTasks[index]) }
                     )
                 }
             }

@@ -16,7 +16,7 @@ fun AllTaskScreen(
     modifier: Modifier = Modifier,
     viewModel: AllTaskViewModel,
     onTaskClick: (Task) -> Unit,
-    onSubTaskClick: (SubTask) -> Unit,
+    onSubTaskClick: (Task, SubTask) -> Unit,
     bottomBarContent: @Composable () -> Unit
 ) {
     val uiState = viewModel.allTaskUiState.collectAsState()

@@ -36,12 +36,9 @@ import com.yash.apps.clockwise.presentation.taskdetails.components.TaskDetailTab
 fun TaskDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskDetailViewModel,
-    task: Task,
     onNewRecordClick: (Task) -> Unit,
-    onSubTaskClick: (SubTask) -> Unit
+    onSubTaskClick: (Task, SubTask) -> Unit
 ) {
-    viewModel.fetchAllRecordsByTask(taskId = task.tId)
-    viewModel.fetchAllSubTasksByTask(taskId = task.tId)
     val uiState = viewModel.taskDetailUiState.collectAsState()
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -53,7 +50,7 @@ fun TaskDetailScreen(
             ) {
                 NewTaskFabComponent(
                     label = "New Sub Task",
-                    onSave = { viewModel.addNewSubTask(it, task.tId) }
+                    onSave = { viewModel.addNewSubTask(it) }
                 )
             }
         },
@@ -67,7 +64,10 @@ fun TaskDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(text = task.tName, style = MaterialTheme.typography.headlineLarge)
+            Text(
+                text = uiState.value.task?.tName ?: "Task",
+                style = MaterialTheme.typography.headlineLarge
+            )
             Button(onClick = {}) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -77,7 +77,7 @@ fun TaskDetailScreen(
                     Text(text = "Start Project")
                 }
             }
-            OutlinedButton(onClick = { onNewRecordClick(task) }) {
+            OutlinedButton(onClick = { uiState.value.task?.let { onNewRecordClick(it) } }) {
                 Text(text = "New Record")
             }
             TaskDetailTabRow(
@@ -96,7 +96,9 @@ fun TaskDetailScreen(
                     1 -> {
                         SubTaskList(
                             subTasks = uiState.value.subTasks,
-                            onSubTaskClick = onSubTaskClick
+                            onSubTaskClick = { subTask ->
+                                uiState.value.task?.let { task -> onSubTaskClick(task, subTask) }
+                            }
                         )
                     }
                 }

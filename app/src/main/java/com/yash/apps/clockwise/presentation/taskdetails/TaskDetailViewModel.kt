@@ -20,6 +20,12 @@ class TaskDetailViewModel @Inject constructor(
     private var _taskDetailUiState = MutableStateFlow(TaskDetailUiState())
     val taskDetailUiState: StateFlow<TaskDetailUiState> = _taskDetailUiState.asStateFlow()
 
+    fun onTabChanged(index: Int) {
+        _taskDetailUiState.value = _taskDetailUiState.value.copy(
+            selectedTab = index
+        )
+    }
+
     fun fetchAllRecordsByTask(taskId: Int) {
         viewModelScope.launch {
             recordUseCases.getRecordDetailsByTask(taskId).collect {

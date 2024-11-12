@@ -1,6 +1,6 @@
 package com.yash.apps.clockwise.presentation.navigator
 
-import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,7 +16,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.domain.model.SubTask
@@ -79,10 +78,10 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         composable(
             route = Route.TimelineScreen.route,
             enterTransition = {
-                fadeIn(animationSpec = tween(500, easing = FastOutLinearInEasing))
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
             },
             exitTransition = {
-                fadeOut(animationSpec = tween(500, easing = FastOutLinearInEasing))
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
             }
         ) {
             val viewModel: TimelineViewModel = hiltViewModel()
@@ -92,23 +91,40 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         composable(
             route = Route.AllTasksScreen.route,
             enterTransition = {
-                fadeIn(animationSpec = tween(500, easing = FastOutLinearInEasing))
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
             },
             exitTransition = {
-                fadeOut(animationSpec = tween(500, easing = FastOutLinearInEasing))
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
             }
         ) {
             val viewModel: AllTaskViewModel = hiltViewModel()
             AllTaskScreen(
                 viewModel = viewModel,
                 onTaskClick = { navigateToTaskDetails(navController, task = it) },
+                onSubTaskClick = { navigateToSubTaskDetails(navController, subTask = it) },
                 bottomBarContent = bottomBar
             )
         }
-        composable(route = Route.ReportsScreen.route) {
+        composable(
+            route = Route.ReportsScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
+            }
+        ) {
 
         }
-        composable(route = Route.TaskDetailScreen.route) {
+        composable(
+            route = Route.TaskDetailScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
+            }
+        ) {
             val viewModel: TaskDetailViewModel = hiltViewModel()
             navController.previousBackStackEntry?.savedStateHandle?.get<Task?>("taskDetail")
                 ?.let { task ->
@@ -119,7 +135,15 @@ fun AppNavigator(modifier: Modifier = Modifier) {
                     )
                 }
         }
-        composable(route = Route.SubTaskDetailScreen.route) {
+        composable(
+            route = Route.SubTaskDetailScreen.route,
+            enterTransition = {
+                fadeIn(animationSpec = tween(500, easing = LinearEasing))
+            },
+            exitTransition = {
+                fadeOut(animationSpec = tween(500, easing = LinearEasing))
+            }
+        ) {
             val viewModel: SubTaskDetailViewModel = hiltViewModel()
             navController.previousBackStackEntry?.savedStateHandle?.get<SubTask?>("subTaskDetail")
                 ?.let { subTask ->

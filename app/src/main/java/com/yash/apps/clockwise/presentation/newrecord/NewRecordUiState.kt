@@ -6,7 +6,7 @@ import java.util.Calendar
 import java.util.Date
 
 data class NewRecordUiState(
-    val date: Long? = null,
+    val date: Date? = null,
     val startTime: Calendar? = null,
     val endTime: Calendar? = null,
     val duration: Long? = null,

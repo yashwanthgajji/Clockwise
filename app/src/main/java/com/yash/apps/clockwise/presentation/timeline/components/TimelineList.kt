@@ -27,8 +27,8 @@ fun TimelineList(days: List<TimelineDay>, modifier: Modifier = Modifier) {
                 }
                 items(day.recordDetails) { recordDetail ->
                     TimelineRecordItem(
-                        taskName = recordDetail.tName,
-                        subTaskName = recordDetail.sName ?: "",
+                        taskName = recordDetail.taskName,
+                        subTaskName = recordDetail.subTaskName,
                         totalDuration = recordDetail.getDurationInString(),
                         onItemClick = { /*TODO*/ }
                     )

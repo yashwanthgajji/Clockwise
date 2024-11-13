@@ -31,8 +31,15 @@ class NewRecordViewModel @Inject constructor(
     }
 
     fun onDateChange(dateInMillis: Long) {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = dateInMillis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
         _newRecordUiState.value = _newRecordUiState.value.copy(
-            date = dateInMillis
+            date = calendar.time
         )
     }
 
@@ -60,7 +67,7 @@ class NewRecordViewModel @Inject constructor(
         _newRecordUiState.value.let {
             if (it.date != null && it.task != null && it.startTime != null && it.endTime != null) {
                 val record = Record(
-                    rDate = Date(it.date),
+                    rDate = it.date,
                     rStartTime = it.startTime.time,
                     rEndTime = it.endTime.time,
                     rDuration = it.endTime.time.time - it.startTime.time.time,

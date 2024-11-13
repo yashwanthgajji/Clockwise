@@ -58,7 +58,7 @@ fun NewRecordScreen(
             RecordDatePicker(
                 modifier = Modifier.fillMaxWidth(),
                 selectedDate = uiState.value.date?.let {
-                    DateFormatter.formatDate(Date(it), DATE_FORMAT)
+                    DateFormatter.formatDate(it, DATE_FORMAT)
                 } ?: "Select a Date",
                 onDateChange = viewModel::onDateChange
             )

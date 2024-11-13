@@ -20,28 +20,28 @@ val Typography = Typography(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
-        lineHeight = 24.sp,
+        lineHeight = 30.sp,
         letterSpacing = 0.5.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-        lineHeight = 16.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = FontFamily.Serif,
         fontWeight = FontWeight.Thin,
         fontSize = 12.sp,
-        lineHeight = 12.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.5.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        lineHeight = 12.sp,
+        lineHeight = 19.sp,
         letterSpacing = 0.2.sp
     )
     /* Other default text styles to override

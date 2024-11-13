@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 SideEffect {
                     systemUiController.setSystemBarsColor(
                         color = Color.Transparent,
-                        darkIcons = isSystemInDarkMode
+                        darkIcons = !isSystemInDarkMode
                     )
                 }
                 ClockwiseApp()

@@ -88,8 +88,8 @@ fun TaskDetailScreen(
                 when (tab) {
                     0 -> {
                         RecordList(
-                            modifier = Modifier.fillMaxSize(),
-                            recordDetails = uiState.value.recordDetails
+                            modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+                            recordListItemValues = uiState.value.recordListItemValues
                         )
                     }
 

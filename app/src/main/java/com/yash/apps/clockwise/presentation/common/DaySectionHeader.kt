@@ -1,4 +1,4 @@
-package com.yash.apps.clockwise.presentation.timeline.components
+package com.yash.apps.clockwise.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column

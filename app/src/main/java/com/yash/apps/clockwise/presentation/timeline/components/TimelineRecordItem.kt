@@ -35,7 +35,6 @@ fun TimelineRecordItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.tertiaryContainer)
                 .padding(horizontal = 16.dp, vertical = 8.dp)
                 .clickable { onItemClick() }
         ) {
@@ -45,13 +44,11 @@ fun TimelineRecordItem(
             ) {
                 Text(
                     text = taskName,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
                     text = subTaskName,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
             Column(
@@ -59,16 +56,16 @@ fun TimelineRecordItem(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Text(
                     text = totalDuration,
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                 )
             }
         }
-        HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.inversePrimary)
     }
 }
 

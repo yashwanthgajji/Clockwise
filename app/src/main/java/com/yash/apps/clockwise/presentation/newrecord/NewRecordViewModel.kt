@@ -1,5 +1,8 @@
 package com.yash.apps.clockwise.presentation.newrecord
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yash.apps.clockwise.domain.model.Record
@@ -23,6 +26,7 @@ class NewRecordViewModel @Inject constructor(
 ): ViewModel() {
     private var _newRecordUiState = MutableStateFlow(NewRecordUiState())
     val newRecordUiState: StateFlow<NewRecordUiState> = _newRecordUiState.asStateFlow()
+    var isSubTaskRecord by mutableStateOf(false)
 
     fun onSubTaskChange(subTask: SubTask?) {
         _newRecordUiState.value = _newRecordUiState.value.copy(
@@ -61,6 +65,9 @@ class NewRecordViewModel @Inject constructor(
             subTask = subTask
         )
         fetchSubTasksByTask()
+        if (subTask != null) {
+            isSubTaskRecord = true
+        }
     }
 
     fun saveRecord(): Boolean {

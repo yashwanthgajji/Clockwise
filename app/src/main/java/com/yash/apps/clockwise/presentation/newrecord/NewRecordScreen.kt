@@ -47,13 +47,15 @@ fun NewRecordScreen(
                 .padding(innerPadding)
                 .scrollable(state = rememberScrollState(), orientation = Orientation.Vertical)
         ) {
-            uiState.value.subTasks?.let {
-                RecordSubTaskSelector(
-                    items = it,
-                    selectedItem = uiState.value.subTask,
-                    onItemSelected = viewModel::onSubTaskChange
-                )
-                HorizontalDivider()
+            uiState.value.let {
+                if (!viewModel.isSubTaskRecord && it.subTasks != null) {
+                    RecordSubTaskSelector(
+                        items = it.subTasks,
+                        selectedItem = uiState.value.subTask,
+                        onItemSelected = viewModel::onSubTaskChange
+                    )
+                    HorizontalDivider()
+                }
             }
             RecordDatePicker(
                 modifier = Modifier.fillMaxWidth(),

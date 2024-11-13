@@ -67,7 +67,8 @@ fun SubTaskDetailScreen(
             }
             RecordList(
                 modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
-                recordListItemValues = uiState.value.recordListItemValues
+                recordListItemValues = uiState.value.recordListItemValues,
+                isSubTaskList = true
             )
         }
     }

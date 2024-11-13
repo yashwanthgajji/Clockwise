@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.domain.model.SubTask
+import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.presentation.common.IconWithLabel
 import com.yash.apps.clockwise.presentation.common.TaskItem
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme

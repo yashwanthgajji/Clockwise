@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TimelineViewModel @Inject constructor(
     private val recordUseCases: RecordUseCases
-): ViewModel() {
+) : ViewModel() {
     private var _timelineUiState = MutableStateFlow(TimelineUiState())
     var timelineUiState: StateFlow<TimelineUiState> = _timelineUiState.asStateFlow()
 
@@ -26,13 +26,34 @@ class TimelineViewModel @Inject constructor(
     private fun fetchAllRecordDetails() {
         viewModelScope.launch {
             recordUseCases.getRecordDetails().collect { recordDetails ->
+                val days = recordDetails.sortedByDescending { it.rDate }
+                    .groupBy { it.rDate }.map { (rDate, recordsForDate) ->
+                    val groupedBySubTask = recordsForDate
+                        .filter { it.sId != null }
+                        .groupBy { it.sId }
+                        .map { (_, recordsOfSubTask) ->
+                            TimelineItem(
+                                taskName = recordsOfSubTask[0].tName,
+                                subTaskName = recordsOfSubTask[0].sName ?: "",
+                                duration = recordsOfSubTask.sumOf { it.rDuration }
+                            )
+                        }
+                    val groupedByTask = recordsForDate
+                        .filter { it.sId == null }
+                        .groupBy { it.tId }
+                        .map { (_, recordsOfTask) ->
+                            TimelineItem(
+                                taskName = recordsOfTask[0].tName,
+                                duration = recordsOfTask.sumOf { it.rDuration }
+                            )
+                        }
+                    TimelineDay(
+                        date = DateFormatter.formatDate(rDate, FULL_DATE_FORMAT),
+                        recordDetails = (groupedByTask + groupedBySubTask).shuffled()
+                    )
+                }
                 _timelineUiState.value = _timelineUiState.value.copy(
-                    days = recordDetails.groupBy { it.rDate }.map { (date, recordsForDate) ->
-                        TimelineDay(
-                            date = DateFormatter.formatDate(date, FULL_DATE_FORMAT),
-                            recordDetails = recordsForDate
-                        )
-                    }
+                    days = days
                 )
             }
         }

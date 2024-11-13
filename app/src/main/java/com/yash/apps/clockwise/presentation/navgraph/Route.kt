@@ -6,4 +6,5 @@ sealed class Route(val route: String) {
     object ReportsScreen: Route(route = "reportsScreen")
     object TaskDetailScreen: Route(route = "taskDetailScreen")
     object SubTaskDetailScreen: Route(route = "subTaskDetailScreen")
+    object NewRecordScreen: Route(route = "newRecordScreen")
 }

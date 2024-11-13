@@ -28,11 +28,11 @@ fun RecordListItem(
 ) {
     Column(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = 8.dp)) {
+        .padding(vertical = 8.dp)
+    ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = recordDetails.getStartTimeInString())
@@ -46,12 +46,12 @@ fun RecordListItem(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Text(
                     text = recordDetails.getDurationInString(),
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

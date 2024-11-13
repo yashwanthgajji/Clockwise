@@ -22,10 +22,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -40,24 +36,21 @@ import com.yash.apps.clockwise.presentation.taskdetails.components.TaskDetailTab
 fun TaskDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskDetailViewModel,
-    task: Task,
-    onSubTaskClick: (SubTask) -> Unit
+    onNewRecordClick: (Task) -> Unit,
+    onSubTaskClick: (Task, SubTask) -> Unit
 ) {
-    var selectedTab by rememberSaveable { mutableIntStateOf(0) }
-    viewModel.fetchAllRecordsByTask(taskId = task.tId)
-    viewModel.fetchAllSubTasksByTask(taskId = task.tId)
     val uiState = viewModel.taskDetailUiState.collectAsState()
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             AnimatedVisibility(
-                selectedTab == 1,
+                visible = uiState.value.selectedTab == 1,
                 enter = slideInVertically { it } + fadeIn(),
                 exit = slideOutVertically { it } + fadeOut()
             ) {
                 NewTaskFabComponent(
                     label = "New Sub Task",
-                    onSave = { viewModel.addNewSubTask(it, task.tId) }
+                    onSave = { viewModel.addNewSubTask(it) }
                 )
             }
         },
@@ -71,7 +64,10 @@ fun TaskDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(text = task.tName, style = MaterialTheme.typography.headlineLarge)
+            Text(
+                text = uiState.value.task?.tName ?: "Task",
+                style = MaterialTheme.typography.headlineLarge
+            )
             Button(onClick = {}) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -81,21 +77,29 @@ fun TaskDetailScreen(
                     Text(text = "Start Project")
                 }
             }
-            OutlinedButton(onClick = {}) {
+            OutlinedButton(onClick = { uiState.value.task?.let { onNewRecordClick(it) } }) {
                 Text(text = "New Record")
             }
-            TaskDetailTabRow(selectedTab = selectedTab, onTabSelected = { selectedTab = it })
-            AnimatedContent(targetState = selectedTab, label = "") { tab ->
+            TaskDetailTabRow(
+                selectedTab = uiState.value.selectedTab,
+                onTabSelected = viewModel::onTabChanged
+            )
+            AnimatedContent(targetState = uiState.value.selectedTab, label = "") { tab ->
                 when (tab) {
                     0 -> {
                         RecordList(
-                            modifier = Modifier.fillMaxSize(),
-                            recordDetails = uiState.value.recordDetails
+                            modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+                            recordListItemValues = uiState.value.recordListItemValues
                         )
                     }
 
                     1 -> {
-                        SubTaskList(subTasks = uiState.value.subTasks, onSubTaskClick = onSubTaskClick)
+                        SubTaskList(
+                            subTasks = uiState.value.subTasks,
+                            onSubTaskClick = { subTask ->
+                                uiState.value.task?.let { task -> onSubTaskClick(task, subTask) }
+                            }
+                        )
                     }
                 }
             }

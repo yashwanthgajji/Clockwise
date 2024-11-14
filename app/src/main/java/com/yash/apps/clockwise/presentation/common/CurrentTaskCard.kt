@@ -2,9 +2,12 @@ package com.yash.apps.clockwise.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,10 +34,13 @@ fun CurrentTaskCard(
     modifier: Modifier = Modifier,
     taskName: String,
     subTaskName: String? = null,
-    duration: String
+    duration: String,
+    onStopPressed: () -> Unit
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 32.dp
         ),
@@ -68,9 +74,9 @@ fun CurrentTaskCard(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                subTaskName?.let {
+                if (subTaskName != null) {
                     Text(
                         modifier = Modifier.weight(1f),
                         text = subTaskName,
@@ -78,9 +84,15 @@ fun CurrentTaskCard(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                } else {
+                    Box(
+                        modifier = Modifier
+                        .height(24.dp)
+                        .weight(1f)
+                    )
                 }
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = onStopPressed,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -111,7 +123,21 @@ private fun CurrentTaskCardPreview() {
         CurrentTaskCard(
             taskName = "Android Project - Data Structures",
             subTaskName = "Cleaning structure need to be created",
-            duration = "01:20:47"
+            duration = "01:20:47",
+            onStopPressed = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun CurrentTaskCardWithoutSubTaskPreview() {
+    ClockwiseTheme {
+        CurrentTaskCard(
+            taskName = "Android Project",
+            duration = "01:20:47",
+            onStopPressed = {}
         )
     }
 }

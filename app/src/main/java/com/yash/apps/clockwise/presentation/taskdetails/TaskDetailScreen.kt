@@ -37,7 +37,10 @@ fun TaskDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: TaskDetailViewModel,
     onNewRecordClick: (Task) -> Unit,
-    onSubTaskClick: (Task, SubTask) -> Unit
+    onSubTaskClick: (Task, SubTask) -> Unit,
+    onStartClick: (Task, SubTask?) -> Unit,
+    isActiveSession: Boolean = false,
+    activeSessionComponent: @Composable () -> Unit = {}
 ) {
     val uiState = viewModel.taskDetailUiState.collectAsState()
     Scaffold(
@@ -64,11 +67,14 @@ fun TaskDetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            AnimatedVisibility(visible = isActiveSession) {
+                activeSessionComponent()
+            }
             Text(
                 text = uiState.value.task?.tName ?: "Task",
                 style = MaterialTheme.typography.headlineLarge
             )
-            Button(onClick = {}) {
+            Button(onClick = { uiState.value.task?.let { onStartClick(it, null) } }) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -88,7 +94,9 @@ fun TaskDetailScreen(
                 when (tab) {
                     0 -> {
                         RecordList(
-                            modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = 16.dp),
                             recordListItemValues = uiState.value.recordListItemValues
                         )
                     }

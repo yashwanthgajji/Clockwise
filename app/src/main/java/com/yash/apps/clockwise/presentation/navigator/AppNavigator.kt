@@ -22,6 +22,7 @@ import com.yash.apps.clockwise.domain.model.SubTask
 import com.yash.apps.clockwise.domain.model.Task
 import com.yash.apps.clockwise.presentation.alltasks.AllTaskScreen
 import com.yash.apps.clockwise.presentation.alltasks.AllTaskViewModel
+import com.yash.apps.clockwise.presentation.common.CurrentTaskCard
 import com.yash.apps.clockwise.presentation.navgraph.Route
 import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNavigation
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
@@ -40,7 +41,11 @@ import com.yash.apps.clockwise.util.Constants.SUB_TASK_DETAIL_TASK
 import com.yash.apps.clockwise.util.Constants.TASK_DETAIL_TASK
 
 @Composable
-fun AppNavigator(modifier: Modifier = Modifier) {
+fun AppNavigator(
+    modifier: Modifier = Modifier,
+    appNavigatorViewModel: AppNavigatorViewModel = hiltViewModel()
+) {
+    val uiState = appNavigatorViewModel.appNavigatorUiState.collectAsState()
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Timeline"),
@@ -49,26 +54,33 @@ fun AppNavigator(modifier: Modifier = Modifier) {
         )
     }
     val navController = rememberNavController()
-    var selectedItem by rememberSaveable {
-        mutableIntStateOf(0)
+    val currentTaskCard: @Composable () -> Unit = {
+        CurrentTaskCard(
+            taskName = uiState.value.task?.tName ?: "",
+            subTaskName = uiState.value.subTask?.sName,
+            duration = uiState.value.duration,
+            onStopPressed = appNavigatorViewModel::stopActiveSession
+        )
     }
     val bottomBar: @Composable () -> Unit = {
         AppBottomNavigation(
             items = bottomNavigationItems,
-            selectedItem = selectedItem,
+            selectedItem = uiState.value.selectedBottomNavigationTab,
             onItemClick = { index ->
-                selectedItem = index
+                appNavigatorViewModel.update(
+                    uiState.value.copy(
+                        selectedBottomNavigationTab = index
+                    )
+                )
                 when (index) {
                     0 -> navigateToTab(
                         navController = navController,
                         route = Route.TimelineScreen.route
                     )
-
                     1 -> navigateToTab(
                         navController = navController,
                         route = Route.AllTasksScreen.route
                     )
-
                     2 -> navigateToTab(
                         navController = navController,
                         route = Route.ReportsScreen.route
@@ -145,7 +157,10 @@ fun AppNavigator(modifier: Modifier = Modifier) {
                 },
                 onSubTaskClick = { t, s ->
                     navigateToSubTaskDetails(navController, task = t, subTask = s)
-                }
+                },
+                onStartClick = appNavigatorViewModel::startActiveSession,
+                isActiveSession = uiState.value.isActiveSession,
+                activeSessionComponent = currentTaskCard
             )
         }
         composable(

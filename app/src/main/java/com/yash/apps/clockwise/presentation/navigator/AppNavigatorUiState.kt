@@ -7,9 +7,9 @@ import java.util.Date
 data class AppNavigatorUiState(
     val selectedBottomNavigationTab: Int = 0,
     val isActiveSession: Boolean = false,
+    val activeDuration: Long = 0,
     val task: Task? = null,
     val subTask: SubTask? = null,
     val startTime: Date = Date(),
-    val endTime: Date = Date(),
-    val duration: String = "00:00:00"
+    val endTime: Date = Date()
 )

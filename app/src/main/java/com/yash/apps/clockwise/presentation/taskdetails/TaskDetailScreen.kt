@@ -74,7 +74,10 @@ fun TaskDetailScreen(
                 text = uiState.value.task?.tName ?: "Task",
                 style = MaterialTheme.typography.headlineLarge
             )
-            Button(onClick = { uiState.value.task?.let { onStartClick(it, null) } }) {
+            Button(
+                onClick = { uiState.value.task?.let { onStartClick(it, null) } },
+                enabled = !isActiveSession
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)

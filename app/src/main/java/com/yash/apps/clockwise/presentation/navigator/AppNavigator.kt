@@ -34,11 +34,13 @@ import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailViewModel
 import com.yash.apps.clockwise.presentation.timeline.TimelineScreen
 import com.yash.apps.clockwise.presentation.timeline.TimelineViewModel
+import com.yash.apps.clockwise.util.Constants.DURATION_FORMAT
 import com.yash.apps.clockwise.util.Constants.NEW_RECORD_SUB_TASK
 import com.yash.apps.clockwise.util.Constants.NEW_RECORD_TASK
 import com.yash.apps.clockwise.util.Constants.SUB_TASK_DETAIL_SUB_TASK
 import com.yash.apps.clockwise.util.Constants.SUB_TASK_DETAIL_TASK
 import com.yash.apps.clockwise.util.Constants.TASK_DETAIL_TASK
+import com.yash.apps.clockwise.util.DateFormatter
 
 @Composable
 fun AppNavigator(
@@ -46,6 +48,7 @@ fun AppNavigator(
     appNavigatorViewModel: AppNavigatorViewModel = hiltViewModel()
 ) {
     val uiState = appNavigatorViewModel.appNavigatorUiState.collectAsState()
+    val timer = appNavigatorViewModel.timeInSeconds.collectAsState()
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationItem(icon = R.drawable.timeline_icon, text = "Timeline"),
@@ -58,7 +61,7 @@ fun AppNavigator(
         CurrentTaskCard(
             taskName = uiState.value.task?.tName ?: "",
             subTaskName = uiState.value.subTask?.sName,
-            duration = uiState.value.duration,
+            duration = DateFormatter.formatDuration(timer.value, DURATION_FORMAT),
             onStopPressed = appNavigatorViewModel::stopActiveSession
         )
     }

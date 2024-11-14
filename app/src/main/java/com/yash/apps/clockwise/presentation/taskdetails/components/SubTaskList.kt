@@ -27,7 +27,9 @@ import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 fun SubTaskList(
     modifier: Modifier = Modifier,
     subTasks: List<SubTask>,
-    onSubTaskClick: (SubTask) -> Unit
+    onSubTaskClick: (SubTask) -> Unit,
+    onStartClick: (SubTask) -> Unit,
+    isActiveSession: Boolean = false,
 ) {
     AnimatedVisibility (subTasks.isEmpty(), enter = fadeIn(), exit = fadeOut()) {
         IconWithLabel(
@@ -48,7 +50,9 @@ fun SubTaskList(
                     .clip(MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 name = subTask.sName,
-                onMoreClick = { onSubTaskClick(subTask) }
+                onMoreClick = { onSubTaskClick(subTask) },
+                onPlayClick = { onStartClick(subTask) },
+                isPlayEnabled = !isActiveSession
             )
         }
     }
@@ -68,7 +72,9 @@ private fun SubTaskListPreview() {
     ClockwiseTheme {
         SubTaskList(
             subTasks = subTasks,
-            onSubTaskClick = {}
+            onSubTaskClick = {},
+            onStartClick = {},
+            isActiveSession = false
         )
     }
 }

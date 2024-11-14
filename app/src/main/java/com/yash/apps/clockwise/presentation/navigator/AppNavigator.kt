@@ -6,11 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,7 +43,7 @@ fun AppNavigator(
     modifier: Modifier = Modifier,
     appNavigatorViewModel: AppNavigatorViewModel = hiltViewModel()
 ) {
-    val uiState = appNavigatorViewModel.appNavigatorUiState.collectAsState()
+    val appNavigatorUiState = appNavigatorViewModel.appNavigatorUiState.collectAsState()
     val timer = appNavigatorViewModel.timeInSeconds.collectAsState()
     val bottomNavigationItems = remember {
         listOf(
@@ -59,8 +55,8 @@ fun AppNavigator(
     val navController = rememberNavController()
     val currentTaskCard: @Composable () -> Unit = {
         CurrentTaskCard(
-            taskName = uiState.value.task?.tName ?: "",
-            subTaskName = uiState.value.subTask?.sName,
+            taskName = appNavigatorUiState.value.task?.tName ?: "",
+            subTaskName = appNavigatorUiState.value.subTask?.sName,
             duration = DateFormatter.formatDuration(timer.value, DURATION_FORMAT),
             onStopPressed = appNavigatorViewModel::stopActiveSession
         )
@@ -68,10 +64,10 @@ fun AppNavigator(
     val bottomBar: @Composable () -> Unit = {
         AppBottomNavigation(
             items = bottomNavigationItems,
-            selectedItem = uiState.value.selectedBottomNavigationTab,
+            selectedItem = appNavigatorUiState.value.selectedBottomNavigationTab,
             onItemClick = { index ->
                 appNavigatorViewModel.update(
-                    uiState.value.copy(
+                    appNavigatorUiState.value.copy(
                         selectedBottomNavigationTab = index
                     )
                 )
@@ -108,7 +104,12 @@ fun AppNavigator(
         ) {
             val viewModel: TimelineViewModel = hiltViewModel()
             val uiState = viewModel.timelineUiState.collectAsState()
-            TimelineScreen(timelineUiState = uiState.value, bottomBarContent = bottomBar)
+            TimelineScreen(
+                timelineUiState = uiState.value,
+                bottomBarContent = bottomBar,
+                isActiveSession = appNavigatorUiState.value.isActiveSession,
+                activeSessionComponent = currentTaskCard
+            )
         }
         composable(
             route = Route.AllTasksScreen.route,
@@ -126,7 +127,10 @@ fun AppNavigator(
                 onSubTaskClick = { task, subTask ->
                     navigateToSubTaskDetails(navController, task = task, subTask = subTask)
                 },
-                bottomBarContent = bottomBar
+                bottomBarContent = bottomBar,
+                onStartClick = appNavigatorViewModel::startActiveSession,
+                isActiveSession = appNavigatorUiState.value.isActiveSession,
+                activeSessionComponent = currentTaskCard
             )
         }
         composable(
@@ -162,7 +166,7 @@ fun AppNavigator(
                     navigateToSubTaskDetails(navController, task = t, subTask = s)
                 },
                 onStartClick = appNavigatorViewModel::startActiveSession,
-                isActiveSession = uiState.value.isActiveSession,
+                isActiveSession = appNavigatorUiState.value.isActiveSession,
                 activeSessionComponent = currentTaskCard
             )
         }
@@ -193,7 +197,10 @@ fun AppNavigator(
                         task = t,
                         subTask = s
                     )
-                }
+                },
+                onStartClick = appNavigatorViewModel::startActiveSession,
+                isActiveSession = appNavigatorUiState.value.isActiveSession,
+                activeSessionComponent = currentTaskCard
             )
         }
         composable(

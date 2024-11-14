@@ -103,13 +103,16 @@ fun TaskDetailScreen(
                             recordListItemValues = uiState.value.recordListItemValues
                         )
                     }
-
                     1 -> {
                         SubTaskList(
                             subTasks = uiState.value.subTasks,
                             onSubTaskClick = { subTask ->
                                 uiState.value.task?.let { task -> onSubTaskClick(task, subTask) }
-                            }
+                            },
+                            onStartClick = { subTask ->
+                                uiState.value.task?.let { task -> onStartClick(task, subTask) }
+                            },
+                            isActiveSession = isActiveSession
                         )
                     }
                 }

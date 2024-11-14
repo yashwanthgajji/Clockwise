@@ -1,5 +1,6 @@
 package com.yash.apps.clockwise.presentation.subtaskdetails
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,26 +30,40 @@ import com.yash.apps.clockwise.presentation.common.RecordList
 fun SubTaskDetailScreen(
     modifier: Modifier = Modifier,
     onNewRecordClick: (Task, SubTask) -> Unit,
-    viewModel: SubTaskDetailViewModel
+    viewModel: SubTaskDetailViewModel,
+    onStartClick: (Task, SubTask?) -> Unit,
+    isActiveSession: Boolean = false,
+    activeSessionComponent: @Composable () -> Unit = {}
 ) {
     val uiState = viewModel.subTaskDetailUiState.collectAsState()
-    Surface(
+    Scaffold(
         modifier = modifier.fillMaxSize()
-    ) {
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
-                .navigationBarsPadding()
+                .padding(innerPadding)
                 .padding(start = 16.dp, top = 32.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            AnimatedVisibility(visible = isActiveSession) {
+                activeSessionComponent()
+            }
             Text(
                 text = uiState.value.subTask?.sName ?: "Sub Task",
                 style = MaterialTheme.typography.headlineLarge
             )
-            Button(onClick = {}) {
+            Button(
+                onClick = {
+                    uiState.value.let {
+                        if (it.task != null && it.subTask != null) {
+                            onStartClick(it.task, it.subTask)
+                        }
+                    }
+                },
+                enabled = !isActiveSession
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(16.dp)

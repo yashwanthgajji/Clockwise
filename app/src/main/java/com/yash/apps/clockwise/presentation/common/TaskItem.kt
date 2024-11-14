@@ -17,10 +17,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.yash.apps.clockwise.R
 
 @Composable
-fun TaskItem(name: String, modifier: Modifier = Modifier, onMoreClick: () -> Unit) {
+fun TaskItem(
+    name: String,
+    modifier: Modifier = Modifier,
+    onMoreClick: () -> Unit,
+    onPlayClick: () -> Unit,
+    isPlayEnabled: Boolean
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -29,15 +37,16 @@ fun TaskItem(name: String, modifier: Modifier = Modifier, onMoreClick: () -> Uni
     ) {
         Text(text = name, modifier = Modifier.weight(1f))
         IconButton(
-            onClick = {},
+            onClick = onPlayClick,
             modifier = Modifier
                 .clip(MaterialTheme.shapes.small),
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = MaterialTheme.colorScheme.background
-            )
+            ),
+            enabled = isPlayEnabled
         ) {
             Icon(
-                imageVector = Icons.Filled.PlayArrow,
+                painter = painterResource(id = R.drawable.play_icon),
                 contentDescription = "start Task $name",
                 modifier = Modifier
                     .height(24.dp)

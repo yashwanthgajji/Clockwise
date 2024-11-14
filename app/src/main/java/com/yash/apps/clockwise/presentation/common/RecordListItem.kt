@@ -24,7 +24,10 @@ import java.util.Date
 @Composable
 fun RecordListItem(
     modifier: Modifier = Modifier,
-    recordDetails: RecordDetails
+    startTime: String,
+    endTime: String,
+    duration: String,
+    subTaskName: String? = null,
 ) {
     Column(modifier = modifier
         .fillMaxWidth()
@@ -35,11 +38,11 @@ fun RecordListItem(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = recordDetails.getStartTimeInString())
+            Text(text = startTime)
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "-")
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = recordDetails.getEndTimeInString())
+            Text(text = endTime)
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,13 +52,13 @@ fun RecordListItem(
                     .background(MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Text(
-                    text = recordDetails.getDurationInString(),
+                    text = duration,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
-        recordDetails.sName?.let {
+        subTaskName?.let {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -63,48 +66,8 @@ fun RecordListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                Text(text = recordDetails.sName)
+                Text(text = subTaskName)
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun RecordListItemPreview() {
-    ClockwiseTheme {
-        RecordListItem(
-            recordDetails = RecordDetails(
-                rId = 1,
-                rDate = Date(),
-                rStartTime = Date(Date().time - (70 * 60 * 1000)),
-                rEndTime = Date(),
-                rDuration = (70 * 60 * 1000),
-                tId = 1,
-                tName = "Studying",
-                sId = 2,
-                sName = "Kotlin Programming"
-            )
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun RecordListItemWithoutSubTaskPreview() {
-    ClockwiseTheme {
-        RecordListItem(
-            recordDetails = RecordDetails(
-                rId = 1,
-                rDate = Date(),
-                rStartTime = Date(Date().time - (135 * 60 * 1000)),
-                rEndTime = Date(),
-                rDuration = (70 * 60 * 1000) + (25 * 1000),
-                tId = 1,
-                tName = "Studying"
-            )
-        )
     }
 }

@@ -36,7 +36,9 @@ fun TaskCard(
     task: Task,
     onTaskClick: (Task) -> Unit,
     subTasks: List<SubTask> = emptyList(),
-    onSubTaskClick: (Task, SubTask) -> Unit = {_, _ -> }
+    onSubTaskClick: (Task, SubTask) -> Unit = {_, _ -> },
+    onStartClick: (Task, SubTask?) -> Unit = {_, _ -> },
+    isActiveSession: Boolean = false,
 ) {
     var isPressed by rememberSaveable { mutableStateOf(false) }
     Column(modifier = modifier) {
@@ -49,7 +51,12 @@ fun TaskCard(
                 pressedElevation = 8.dp
             )
         ) {
-            TaskItem(name = task.tName, onMoreClick = { onTaskClick(task) })
+            TaskItem(
+                name = task.tName,
+                onMoreClick = { onTaskClick(task) },
+                onPlayClick = { onStartClick(task, null) },
+                isPlayEnabled = !isActiveSession
+            )
         }
         AnimatedVisibility(
             visible = isPressed,
@@ -69,7 +76,9 @@ fun TaskCard(
                 repeat(subTasks.size) { index ->
                     TaskItem(
                         name = subTasks[index].sName,
-                        onMoreClick = { onSubTaskClick(task, subTasks[index]) }
+                        onMoreClick = { onSubTaskClick(task, subTasks[index]) },
+                        onPlayClick = { onStartClick(task, subTasks[index]) },
+                        isPlayEnabled = !isActiveSession
                     )
                 }
             }

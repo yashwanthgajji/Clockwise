@@ -20,7 +20,9 @@ fun TaskList(
     tasks: List<Task>,
     onTaskClick: (Task) -> Unit,
     subTasksMap: Map<Int, List<SubTask>>,
-    onSubTaskClick: (Task, SubTask) -> Unit
+    onSubTaskClick: (Task, SubTask) -> Unit,
+    onStartClick: (Task, SubTask?) -> Unit,
+    isActiveSession: Boolean = false,
 ) {
     AnimatedVisibility(tasks.isEmpty()) {
         IconWithLabel(
@@ -38,7 +40,9 @@ fun TaskList(
                 task = task,
                 onTaskClick = onTaskClick,
                 subTasks = subTasksMap[task.tId] ?: emptyList(),
-                onSubTaskClick = onSubTaskClick
+                onSubTaskClick = onSubTaskClick,
+                onStartClick = onStartClick,
+                isActiveSession = isActiveSession
             )
         }
     }

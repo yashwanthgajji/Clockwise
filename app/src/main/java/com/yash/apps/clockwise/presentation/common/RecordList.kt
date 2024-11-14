@@ -14,7 +14,11 @@ import com.yash.apps.clockwise.domain.model.RecordListItemValue
 import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 
 @Composable
-fun RecordList(modifier: Modifier = Modifier, recordListItemValues: List<RecordListItemValue>) {
+fun RecordList(
+    modifier: Modifier = Modifier,
+    recordListItemValues: List<RecordListItemValue>,
+    isSubTaskList: Boolean = false
+) {
     if (recordListItemValues.isEmpty()) {
         IconWithLabel(
             modifier = modifier,
@@ -28,7 +32,13 @@ fun RecordList(modifier: Modifier = Modifier, recordListItemValues: List<RecordL
             items(recordListItemValues) { recordListItemValue ->
                 DaySectionHeader(dayString = recordListItemValue.date)
                 repeat(recordListItemValue.recordDetails.size) { index ->
-                    RecordListItem(recordDetails = recordListItemValue.recordDetails[index])
+                    val recordDetails = recordListItemValue.recordDetails[index]
+                    RecordListItem(
+                        startTime = recordDetails.getStartTimeInString(),
+                        endTime = recordDetails.getEndTimeInString(),
+                        duration = recordDetails.getDurationInString(),
+                        subTaskName = if (!isSubTaskList) recordDetails.sName else null
+                    )
                     if (index != recordListItemValue.recordDetails.size - 1) {
                         HorizontalDivider()
                     }

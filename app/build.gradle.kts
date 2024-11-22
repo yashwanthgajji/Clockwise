@@ -97,6 +97,8 @@ dependencies {
     //Paging 3
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
+    //Charts
+    implementation (libs.compose.charts)
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.room.testing)

@@ -24,6 +24,8 @@ import com.yash.apps.clockwise.presentation.navigator.components.AppBottomNaviga
 import com.yash.apps.clockwise.presentation.navigator.components.BottomNavigationItem
 import com.yash.apps.clockwise.presentation.newrecord.NewRecordScreen
 import com.yash.apps.clockwise.presentation.newrecord.NewRecordViewModel
+import com.yash.apps.clockwise.presentation.reports.ReportsScreen
+import com.yash.apps.clockwise.presentation.reports.ReportsViewModel
 import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailScreen
 import com.yash.apps.clockwise.presentation.subtaskdetails.SubTaskDetailViewModel
 import com.yash.apps.clockwise.presentation.taskdetails.TaskDetailScreen
@@ -142,7 +144,8 @@ fun AppNavigator(
                 fadeOut(animationSpec = tween(500, easing = LinearEasing))
             }
         ) {
-
+            val viewModel: ReportsViewModel = hiltViewModel()
+            ReportsScreen(viewModel = viewModel, bottomBarContent = bottomBar)
         }
         composable(
             route = Route.TaskDetailScreen.route,

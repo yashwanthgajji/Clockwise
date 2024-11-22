@@ -5,6 +5,7 @@ object Constants {
 
     const val TIME_FORMAT = "hh:mm a"
     const val DURATION_FORMAT = "hh:mm:ss"
+    const val SELECTOR_DATE_FORMAT = "EEE\nMM/dd"
     const val DATE_FORMAT = "MM/dd/yyyy"
     const val FULL_DATE_FORMAT = "EEEE, MMMM d, yyyy"
 

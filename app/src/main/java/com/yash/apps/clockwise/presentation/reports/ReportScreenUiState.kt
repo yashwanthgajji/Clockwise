@@ -7,6 +7,7 @@ import java.util.Date
 data class ReportScreenUiState(
     val reportDataList: List<ReportDataValue> = emptyList(),
     val monthDates: List<Date> = emptyList(),
+    val selectedMonth: Date = DateUtil.getFirstDayOfCurrentMonth(),
     val dateSelected: Date = DateUtil.getCurrentDateWithMidnightTime(),
     val todayDate: Date = DateUtil.getCurrentDateWithMidnightTime()
 )

@@ -8,7 +8,7 @@ object Constants {
     const val SELECTOR_DATE_FORMAT = "EEE\nMM/dd"
     const val DATE_FORMAT = "MM/dd/yyyy"
     const val FULL_DATE_FORMAT = "EEEE, MMMM d, yyyy"
-    const val ONLY_MONTH_FORMAT = "MMMM"
+    const val ONLY_MONTH_YEAR_FORMAT = "MMMM yyyy"
 
     const val TASK_DETAIL_TASK = "task detail screen - task"
     const val SUB_TASK_DETAIL_TASK = "sub task detail screen - task"

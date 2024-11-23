@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.presentation.reports.components.DateSelectorRow
 import com.yash.apps.clockwise.presentation.reports.components.DayTasksPieChart
 import com.yash.apps.clockwise.presentation.reports.components.MonthSelectorRow
+import com.yash.apps.clockwise.util.Constants.ONLY_MONTH_YEAR_FORMAT
+import com.yash.apps.clockwise.util.DateFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,17 +53,18 @@ fun ReportsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             MonthSelectorRow(
-                month = "November",
-                onPrevClick = { },
-                onNextClick = { },
-                isNextEnabled = false
+                month = DateFormatter.formatDate(uiState.selectedMonth, ONLY_MONTH_YEAR_FORMAT),
+                onPrevClick = viewModel::gotoPrevMonth,
+                onNextClick = viewModel::gotoNextMonth,
+                isNextEnabled = viewModel.isNextEnabled
             )
             Spacer(modifier = Modifier.height(4.dp))
             DateSelectorRow(
                 dates = uiState.monthDates,
                 dateSelected = uiState.dateSelected,
                 todayDate = uiState.todayDate,
-                onDateSelected = viewModel::updateSelectedDate
+                onDateSelected = viewModel::updateSelectedDate,
+                lazyListState = viewModel.dateSelectorScrollState
             )
             Spacer(modifier = Modifier.height(32.dp))
             DayTasksPieChart(

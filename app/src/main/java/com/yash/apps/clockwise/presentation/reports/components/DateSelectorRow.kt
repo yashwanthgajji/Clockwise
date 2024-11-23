@@ -2,6 +2,7 @@ package com.yash.apps.clockwise.presentation.reports.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -18,15 +19,14 @@ fun DateSelectorRow(
     dates: List<Date>,
     dateSelected: Date,
     todayDate: Date,
-    onDateSelected: (Date) -> Unit
+    onDateSelected: (Date) -> Unit,
+    lazyListState: LazyListState
 ) {
     LazyRow(
         modifier = modifier
             .fillMaxWidth()
             .border(width = 2.dp, color = MaterialTheme.colorScheme.onBackground),
-        state = rememberLazyListState(
-            initialFirstVisibleItemIndex = dates.indexOf(todayDate) - 3
-        ),
+        state = lazyListState,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         items(dates) { date ->

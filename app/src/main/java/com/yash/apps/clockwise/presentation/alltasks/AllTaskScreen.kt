@@ -10,6 +10,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.domain.model.SubTask
@@ -28,7 +29,7 @@ fun AllTaskScreen(
     isActiveSession: Boolean = false,
     activeSessionComponent: @Composable () -> Unit = {}
 ) {
-    val uiState = viewModel.allTaskUiState.collectAsState()
+    val uiState by viewModel.allTaskUiState.collectAsState()
     Scaffold(
         bottomBar = bottomBarContent,
         floatingActionButton = {
@@ -46,9 +47,9 @@ fun AllTaskScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
             TaskList(
-                tasks = uiState.value.tasks,
+                tasks = uiState.tasks,
                 onTaskClick = onTaskClick,
-                subTasksMap = uiState.value.subTasksMap,
+                subTasksMap = uiState.subTasksMap,
                 onSubTaskClick = onSubTaskClick,
                 onStartClick = onStartClick,
                 isActiveSession = isActiveSession

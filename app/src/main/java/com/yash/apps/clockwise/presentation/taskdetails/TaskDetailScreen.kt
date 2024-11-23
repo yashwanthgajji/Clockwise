@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,12 +43,12 @@ fun TaskDetailScreen(
     isActiveSession: Boolean = false,
     activeSessionComponent: @Composable () -> Unit = {}
 ) {
-    val uiState = viewModel.taskDetailUiState.collectAsState()
+    val uiState by viewModel.taskDetailUiState.collectAsState()
     Scaffold(
         modifier = modifier.fillMaxSize(),
         floatingActionButton = {
             AnimatedVisibility(
-                visible = uiState.value.selectedTab == 1,
+                visible = uiState.selectedTab == 1,
                 enter = slideInVertically { it } + fadeIn(),
                 exit = slideOutVertically { it } + fadeOut()
             ) {
@@ -71,11 +72,11 @@ fun TaskDetailScreen(
                 activeSessionComponent()
             }
             Text(
-                text = uiState.value.task?.tName ?: "Task",
+                text = uiState.task?.tName ?: "Task",
                 style = MaterialTheme.typography.headlineLarge
             )
             Button(
-                onClick = { uiState.value.task?.let { onStartClick(it, null) } },
+                onClick = { uiState.task?.let { onStartClick(it, null) } },
                 enabled = !isActiveSession
             ) {
                 Row(
@@ -86,31 +87,31 @@ fun TaskDetailScreen(
                     Text(text = "Start Project")
                 }
             }
-            OutlinedButton(onClick = { uiState.value.task?.let { onNewRecordClick(it) } }) {
+            OutlinedButton(onClick = { uiState.task?.let { onNewRecordClick(it) } }) {
                 Text(text = "New Record")
             }
             TaskDetailTabRow(
-                selectedTab = uiState.value.selectedTab,
+                selectedTab = uiState.selectedTab,
                 onTabSelected = viewModel::onTabChanged
             )
-            AnimatedContent(targetState = uiState.value.selectedTab, label = "") { tab ->
+            AnimatedContent(targetState = uiState.selectedTab, label = "") { tab ->
                 when (tab) {
                     0 -> {
                         RecordList(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(bottom = 16.dp),
-                            recordListItemValues = uiState.value.recordListItemValues
+                            recordListItemValues = uiState.recordListItemValues
                         )
                     }
                     1 -> {
                         SubTaskList(
-                            subTasks = uiState.value.subTasks,
+                            subTasks = uiState.subTasks,
                             onSubTaskClick = { subTask ->
-                                uiState.value.task?.let { task -> onSubTaskClick(task, subTask) }
+                                uiState.task?.let { task -> onSubTaskClick(task, subTask) }
                             },
                             onStartClick = { subTask ->
-                                uiState.value.task?.let { task -> onStartClick(task, subTask) }
+                                uiState.task?.let { task -> onStartClick(task, subTask) }
                             },
                             isActiveSession = isActiveSession
                         )

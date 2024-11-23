@@ -9,7 +9,6 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -63,7 +62,6 @@ fun DayTasksPieChart(
     }
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .scrollable(state = rememberScrollState(), orientation = Orientation.Vertical),
         horizontalAlignment = Alignment.CenterHorizontally,

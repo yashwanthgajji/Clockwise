@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.presentation.reports.components.DateSelectorRow
 import com.yash.apps.clockwise.presentation.reports.components.DayTasksPieChart
+import com.yash.apps.clockwise.presentation.reports.components.MonthSelectorRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +35,7 @@ fun ReportsScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(text = "Reports") },
+                title = { Text(text = "Reports", style = MaterialTheme.typography.headlineLarge) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent,
                 )
@@ -48,6 +50,13 @@ fun ReportsScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            MonthSelectorRow(
+                month = "November",
+                onPrevClick = { },
+                onNextClick = { },
+                isNextEnabled = false
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             DateSelectorRow(
                 dates = uiState.monthDates,
                 dateSelected = uiState.dateSelected,

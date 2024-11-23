@@ -48,7 +48,7 @@ fun DateSelectorRowItem(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        VerticalDivider(thickness = 2.dp)
+        VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.onBackground)
         Text(
             modifier = Modifier.weight(1f),
             text = DateFormatter.formatDate(date, SELECTOR_DATE_FORMAT),
@@ -56,7 +56,7 @@ fun DateSelectorRowItem(
             textAlign = TextAlign.Center,
             color = textColor
         )
-        VerticalDivider(thickness = 2.dp)
+        VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.onBackground)
     }
 }
 

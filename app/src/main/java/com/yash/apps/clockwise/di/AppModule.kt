@@ -17,6 +17,7 @@ import com.yash.apps.clockwise.domain.usecases.record.DeleteRecord
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetails
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsBySubTask
 import com.yash.apps.clockwise.domain.usecases.record.GetRecordDetailsByTask
+import com.yash.apps.clockwise.domain.usecases.record.GetReportDataOfCurrentData
 import com.yash.apps.clockwise.domain.usecases.record.InsertRecord
 import com.yash.apps.clockwise.domain.usecases.record.RecordUseCases
 import com.yash.apps.clockwise.domain.usecases.record.UpdateRecord
@@ -122,6 +123,7 @@ object AppModule {
             getRecordDetails = GetRecordDetails(recordRepository),
             getRecordDetailsByTask = GetRecordDetailsByTask(recordRepository),
             getRecordDetailsBySubTask = GetRecordDetailsBySubTask(recordRepository),
+            getReportDataOfCurrentData = GetReportDataOfCurrentData(recordRepository),
             insertRecord = InsertRecord(recordRepository),
             updateRecord = UpdateRecord(recordRepository),
             deleteRecord = DeleteRecord(recordRepository)

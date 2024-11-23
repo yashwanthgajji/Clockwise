@@ -20,7 +20,7 @@ fun DateSelectorRow(
     LazyRow(
         modifier = modifier.fillMaxWidth(),
         state = rememberLazyListState(
-            initialFirstVisibleItemIndex = dates.indexOf(todayDate) - 4
+            initialFirstVisibleItemIndex = dates.indexOf(todayDate) - 3
         ),
         verticalAlignment = Alignment.CenterVertically,
     ) {

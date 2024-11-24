@@ -2,6 +2,7 @@ package com.yash.apps.clockwise.presentation.reports
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +36,7 @@ import com.yash.apps.clockwise.R
 import com.yash.apps.clockwise.presentation.reports.components.DateSelectorRow
 import com.yash.apps.clockwise.presentation.reports.components.DayTasksPieChart
 import com.yash.apps.clockwise.presentation.reports.components.MonthSelectorRow
+import com.yash.apps.clockwise.util.Constants.FULL_DATE_FORMAT
 import com.yash.apps.clockwise.util.Constants.ONLY_MONTH_YEAR_FORMAT
 import com.yash.apps.clockwise.util.Constants.REPORT_SHARE_IMAGE_NAME
 import com.yash.apps.clockwise.util.DateFormatter
@@ -104,6 +106,11 @@ fun ReportsScreen(
                                         )
                                     )
                                 } catch (error: Throwable) {
+                                    Toast.makeText(
+                                        context,
+                                        "Some error in sharing image",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                         },
@@ -144,6 +151,7 @@ fun ReportsScreen(
             Spacer(modifier = Modifier.height(32.dp))
             DayTasksPieChart(
                 modifier = Modifier.capturable(captureController),
+                dateSelected = DateFormatter.formatDate(uiState.dateSelected, FULL_DATE_FORMAT),
                 reportDataList = uiState.reportDataList,
             )
         }

@@ -9,11 +9,15 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +43,7 @@ import ir.ehsannarmani.compose_charts.models.Pie
 @Composable
 fun DayTasksPieChart(
     modifier: Modifier = Modifier,
+    dateSelected: String,
     reportDataList: List<ReportDataValue>
 ) {
     var pieDataList by rememberSaveable { mutableStateOf(emptyList<Pie>()) }
@@ -65,12 +70,23 @@ fun DayTasksPieChart(
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .scrollable(state = rememberScrollState(), orientation = Orientation.Vertical),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        item {
+            Text(text = dateSelected, style = MaterialTheme.typography.headlineMedium)
+        }
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+        item {
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 4.dp)
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         if (reportDataList.isEmpty()) {
             item {
                 IconWithLabel(
-                    icon = R.drawable.clock_icon,
+                    icon = R.drawable.empty_calendar_icon,
                     label = "You haven't worked on any task today"
                 )
             }
@@ -101,8 +117,12 @@ fun DayTasksPieChart(
                     )
                 }
             }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
             itemsIndexed(reportDataList) { index, reportData ->
                 Row(
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
@@ -131,7 +151,7 @@ fun DayTasksPieChart(
 
 @Preview(showBackground = true)
 @Composable
-private fun AllTasksMultiLineChartPreview() {
+private fun DayTasksPieChartPreview() {
     val reportDataList = listOf(
         ReportDataValue(
             taskName = "Gym",
@@ -147,14 +167,14 @@ private fun AllTasksMultiLineChartPreview() {
         )
     )
     ClockwiseTheme {
-        DayTasksPieChart(reportDataList = reportDataList)
+        DayTasksPieChart(dateSelected = "Date", reportDataList = reportDataList)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun AllTasksMultiLineChartEmptyPreview() {
+private fun DayTasksPieChartEmptyPreview() {
     ClockwiseTheme {
-        DayTasksPieChart(reportDataList = emptyList())
+        DayTasksPieChart(dateSelected = "Date", reportDataList = emptyList())
     }
 }

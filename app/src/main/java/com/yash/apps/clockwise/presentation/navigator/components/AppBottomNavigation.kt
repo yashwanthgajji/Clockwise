@@ -56,8 +56,8 @@ fun AppBottomNavigation(
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary,
-//                    unselectedIconColor = colorResource(id = R.color.body),
-//                    unselectedTextColor = colorResource(id = R.color.body),
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
                     indicatorColor = MaterialTheme.colorScheme.background
                 )
             )

@@ -31,13 +31,13 @@ fun DateSelectorRowItem(
 ) {
     val backgroundColor = when {
         !enabled -> MaterialTheme.colorScheme.background
-        selected -> MaterialTheme.colorScheme.secondaryContainer
-        else -> MaterialTheme.colorScheme.primaryContainer
+        selected -> MaterialTheme.colorScheme.primaryContainer
+        else -> MaterialTheme.colorScheme.secondaryContainer
     }
     val textColor = when {
         !enabled -> MaterialTheme.colorScheme.onBackground
-        selected -> MaterialTheme.colorScheme.onSecondaryContainer
-        else -> MaterialTheme.colorScheme.onPrimaryContainer
+        selected -> MaterialTheme.colorScheme.onPrimaryContainer
+        else -> MaterialTheme.colorScheme.onSecondaryContainer
     }
     Row(
         modifier = modifier

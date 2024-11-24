@@ -1,6 +1,5 @@
 package com.yash.apps.clockwise.presentation.newrecord
 
-import android.widget.Toast
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
@@ -9,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.yash.apps.clockwise.presentation.newrecord.components.NewRecordTopAppBar
@@ -23,8 +22,6 @@ import com.yash.apps.clockwise.presentation.newrecord.components.RecordSubTaskSe
 import com.yash.apps.clockwise.presentation.newrecord.components.RecordTimePicker
 import com.yash.apps.clockwise.util.Constants.DATE_FORMAT
 import com.yash.apps.clockwise.util.DateFormatter
-import java.util.Calendar
-import java.util.Date
 
 @Composable
 fun NewRecordScreen(
@@ -32,9 +29,9 @@ fun NewRecordScreen(
     viewModel: NewRecordViewModel,
     onBackPress: () -> Unit
 ) {
-    val uiState = viewModel.newRecordUiState.collectAsState()
-    val isAllFilled = uiState.value.let {
-        it.date != null && it.task != null && it.startTime != null && it.endTime != null
+    val uiState by viewModel.newRecordUiState.collectAsState()
+    val isAllFilled = uiState.let {
+        it.task != null && it.startTime < it.endTime
     }
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -47,11 +44,11 @@ fun NewRecordScreen(
                 .padding(innerPadding)
                 .scrollable(state = rememberScrollState(), orientation = Orientation.Vertical)
         ) {
-            uiState.value.let {
-                if (!viewModel.isSubTaskRecord && it.subTasks != null) {
+            uiState.let {
+                if (!viewModel.isSubTaskRecord && !it.subTasks.isNullOrEmpty()) {
                     RecordSubTaskSelector(
                         items = it.subTasks,
-                        selectedItem = uiState.value.subTask,
+                        selectedItem = uiState.subTask,
                         onItemSelected = viewModel::onSubTaskChange
                     )
                     HorizontalDivider()
@@ -59,23 +56,21 @@ fun NewRecordScreen(
             }
             RecordDatePicker(
                 modifier = Modifier.fillMaxWidth(),
-                selectedDate = uiState.value.date?.let {
-                    DateFormatter.formatDate(it, DATE_FORMAT)
-                } ?: "Select a Date",
+                selectedDate = DateFormatter.formatDate(uiState.date, DATE_FORMAT),
                 onDateChange = viewModel::onDateChange
             )
             HorizontalDivider()
             RecordTimePicker(
                 modifier = Modifier.fillMaxWidth(),
                 label = "Start Time",
-                selectedTime = uiState.value.startTime ?: Calendar.getInstance(),
+                selectedTime = uiState.startTime,
                 onTimeChange = viewModel::onStartTimeChange
             )
             HorizontalDivider()
             RecordTimePicker(
                 modifier = Modifier.fillMaxWidth(),
                 label = "End Time",
-                selectedTime = uiState.value.endTime ?: Calendar.getInstance(),
+                selectedTime = uiState.endTime,
                 onTimeChange = viewModel::onEndTimeChange
             )
             HorizontalDivider()

@@ -5,8 +5,11 @@ object Constants {
 
     const val TIME_FORMAT = "hh:mm a"
     const val DURATION_FORMAT = "hh:mm:ss"
+    const val SELECTOR_DATE_FORMAT = "EEE\nMM/dd"
     const val DATE_FORMAT = "MM/dd/yyyy"
     const val FULL_DATE_FORMAT = "EEEE, MMMM d, yyyy"
+    const val ONLY_MONTH_YEAR_FORMAT = "MMMM yyyy"
+    const val REPORT_SHARE_IMAGE_NAME = "MMMM d, yyyy"
 
     const val TASK_DETAIL_TASK = "task detail screen - task"
     const val SUB_TASK_DETAIL_TASK = "sub task detail screen - task"

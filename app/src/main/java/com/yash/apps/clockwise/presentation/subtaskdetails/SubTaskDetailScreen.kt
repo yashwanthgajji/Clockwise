@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -35,7 +36,7 @@ fun SubTaskDetailScreen(
     isActiveSession: Boolean = false,
     activeSessionComponent: @Composable () -> Unit = {}
 ) {
-    val uiState = viewModel.subTaskDetailUiState.collectAsState()
+    val uiState by viewModel.subTaskDetailUiState.collectAsState()
     Scaffold(
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
@@ -51,12 +52,12 @@ fun SubTaskDetailScreen(
                 activeSessionComponent()
             }
             Text(
-                text = uiState.value.subTask?.sName ?: "Sub Task",
+                text = uiState.subTask?.sName ?: "Sub Task",
                 style = MaterialTheme.typography.headlineLarge
             )
             Button(
                 onClick = {
-                    uiState.value.let {
+                    uiState.let {
                         if (it.task != null && it.subTask != null) {
                             onStartClick(it.task, it.subTask)
                         }
@@ -73,7 +74,7 @@ fun SubTaskDetailScreen(
                 }
             }
             OutlinedButton(onClick = {
-                uiState.value.let {
+                uiState.let {
                     if (it.task != null && it.subTask != null) {
                         onNewRecordClick(it.task, it.subTask)
                     }
@@ -83,7 +84,7 @@ fun SubTaskDetailScreen(
             }
             RecordList(
                 modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),
-                recordListItemValues = uiState.value.recordListItemValues,
+                recordListItemValues = uiState.recordListItemValues,
                 isSubTaskList = true
             )
         }

@@ -25,7 +25,7 @@ fun DaySectionHeader(dayString: String, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         )
-        HorizontalDivider(color = MaterialTheme.colorScheme.secondary, thickness = 4.dp)
+        HorizontalDivider(color = MaterialTheme.colorScheme.primaryContainer, thickness = 4.dp)
     }
 }
 

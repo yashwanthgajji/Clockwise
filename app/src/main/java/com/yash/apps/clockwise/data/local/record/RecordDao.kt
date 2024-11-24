@@ -8,7 +8,9 @@ import androidx.room.Query
 import androidx.room.Update
 import com.yash.apps.clockwise.domain.model.Record
 import com.yash.apps.clockwise.domain.model.RecordDetails
+import com.yash.apps.clockwise.domain.model.ReportDataValue
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Dao
 interface RecordDao {
@@ -35,4 +37,10 @@ interface RecordDao {
         INNER JOIN subTasks s ON r.rSubTaskId = s.sId
         WHERE s.sId = :subTaskId""")
     fun getRecordDetailsBySubTask(subTaskId: Int): Flow<List<RecordDetails>>
+    @Query("""SELECT SUM(rDuration) AS taskDuration, t.tName AS taskName
+        from records r 
+        INNER JOIN tasks t ON r.rTaskId = t.tId
+        WHERE r.rDate = :date
+        GROUP BY t.tId""")
+    fun getReportDataOfCurrentDate(date: Date): Flow<List<ReportDataValue>>
 }

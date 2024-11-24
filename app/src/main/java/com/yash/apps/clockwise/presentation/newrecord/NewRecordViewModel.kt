@@ -16,14 +16,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class NewRecordViewModel @Inject constructor(
     private val subTaskUseCases: SubTaskUseCases,
     private val recordUseCases: RecordUseCases
-): ViewModel() {
+) : ViewModel() {
     private var _newRecordUiState = MutableStateFlow(NewRecordUiState())
     val newRecordUiState: StateFlow<NewRecordUiState> = _newRecordUiState.asStateFlow()
     var isSubTaskRecord by mutableStateOf(false)
@@ -72,7 +71,7 @@ class NewRecordViewModel @Inject constructor(
 
     fun saveRecord(): Boolean {
         _newRecordUiState.value.let {
-            if (it.date != null && it.task != null && it.startTime != null && it.endTime != null) {
+            if (it.task != null && it.startTime < it.endTime) {
                 val record = Record(
                     rDate = it.date,
                     rStartTime = it.startTime.time,
@@ -94,7 +93,7 @@ class NewRecordViewModel @Inject constructor(
     private fun fetchSubTasksByTask() {
         _newRecordUiState.value.task?.let { task ->
             viewModelScope.launch {
-                subTaskUseCases.getSubTaskByTask(task.tId).collect() {
+                subTaskUseCases.getSubTaskByTask(task.tId).collect {
                     _newRecordUiState.value = _newRecordUiState.value.copy(
                         subTasks = it
                     )

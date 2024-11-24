@@ -98,7 +98,9 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     implementation(libs.androidx.paging.compose)
     //Charts
-    implementation (libs.compose.charts)
+    implementation(libs.compose.charts)
+    //Screenshots
+    implementation("dev.shreyaspatil:capturable:2.1.0")
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.room.testing)

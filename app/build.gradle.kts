@@ -100,15 +100,24 @@ dependencies {
     //Charts
     implementation(libs.compose.charts)
     //Screenshots
-    implementation("dev.shreyaspatil:capturable:2.1.0")
+    implementation(libs.capturable)
 
     testImplementation(libs.junit)
     testImplementation(libs.androidx.room.testing)
+    //Mocking
+    testImplementation(libs.mockk)
+    //Architectural components
+    testImplementation(libs.androidx.core.testing)
+    //Coroutines for testing
+    testImplementation(libs.kotlinx.coroutines.test)
+    //Turbine for Flow testing
+    testImplementation(libs.turbine)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.mockk.android)
 
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

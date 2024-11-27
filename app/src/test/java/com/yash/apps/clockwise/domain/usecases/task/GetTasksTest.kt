@@ -11,22 +11,22 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class GetTaskTest {
+class GetTasksTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var getTask: GetTask
+    private lateinit var getTasks: GetTasks
     private lateinit var mockRepository: TaskRepository
 
     @Before
     fun setup() {
         mockRepository = mockk()
-        getTask = GetTask(mockRepository)
+        getTasks = GetTasks(mockRepository)
     }
 
     @After
@@ -35,24 +35,27 @@ class GetTaskTest {
     }
 
     @Test
-    fun getTaskUseCase_hasTaskWithId_returnsTask() = runTest {
-        val testTaskId = 12
-        val testTask = Task(tId = testTaskId, tName = "Test task")
-        every { mockRepository.getTaskStream(testTaskId) } returns flowOf(testTask)
-        getTask(taskId = testTaskId).test {
-            val actualTask = awaitItem()
-            assertEquals(testTask, actualTask)
+    fun getTasksUseCase_hasTasks_returnsListOfTasks() = runTest {
+        val tasks = listOf(
+            Task(tId = 1, tName = "Test task 1"),
+            Task(tId = 2, tName = "Test task 2"),
+            Task(tId = 3, tName = "Test task 3"),
+            Task(tId = 4, tName = "Test task 4")
+        )
+        every { mockRepository.getAllTasksStream() } returns flowOf(tasks)
+        getTasks().test {
+            val actualTasks = awaitItem()
+            assertEquals(tasks, actualTasks)
             awaitComplete()
         }
     }
 
     @Test
-    fun getTaskUseCase_noTaskForThisId_returnsNothing() = runTest {
-        val testTaskId = 12
-        every { mockRepository.getTaskStream(testTaskId) } returns flowOf(null)
-        getTask(taskId = testTaskId).test {
-            val actualTask = awaitItem()
-            assertNull(actualTask)
+    fun getTasksUseCase_noTasks_returnsEmptyList() = runTest {
+        every { mockRepository.getAllTasksStream() } returns flowOf(emptyList())
+        getTasks().test {
+            val actualTasks = awaitItem()
+            assertTrue(actualTasks.isEmpty())
             awaitComplete()
         }
     }

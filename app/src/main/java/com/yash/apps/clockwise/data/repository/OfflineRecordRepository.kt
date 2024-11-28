@@ -21,7 +21,6 @@ class OfflineRecordRepository(private val recordDao: RecordDao): RecordRepositor
     override fun getAllRecordDetailsBySubTaskStream(subTaskId: Int): Flow<List<RecordDetails>> {
         return recordDao.getRecordDetailsBySubTask(subTaskId)
     }
-
     override fun getReportDataOfCurrentDateStream(date: Date): Flow<List<ReportDataValue>> {
         return recordDao.getReportDataOfCurrentDate(date)
     }

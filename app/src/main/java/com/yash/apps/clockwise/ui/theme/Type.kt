@@ -2,62 +2,121 @@ package com.yash.apps.clockwise.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.yash.apps.clockwise.R
 
-// Set of Material typography styles to start with
+val courierPrimeFontFamily = FontFamily(
+    Font(R.font.courier_prime_regular, FontWeight.Normal),
+    Font(R.font.courier_prime_bold, FontWeight.Bold),
+    Font(R.font.courier_prime_italic, FontWeight.Light),
+    Font(R.font.courier_prime_bold_italic, FontWeight.SemiBold)
+)
+
+val deliusFontFamily = FontFamily(
+    Font(R.font.delius_regular, FontWeight.Normal)
+)
+
+val deliusSwashFontFamily = FontFamily(
+    Font(R.font.delius_swash_caps_regular, FontWeight.Normal)
+)
+
+val sirachaFontFamily = FontFamily(
+    Font(R.font.sriracha_regular, FontWeight.Normal)
+)
+
+val stylishFontFamily = FontFamily(
+    Font(R.font.stylish_regular, FontWeight.Normal)
+)
+
+val rajdhaniFontFamily = FontFamily(
+    Font(R.font.rajdhani_regular, FontWeight.Normal),
+    Font(R.font.rajdhani_medium, FontWeight.SemiBold)
+)
+
+val chakraPetchFontFamily = FontFamily(
+    Font(R.font.chakra_petch_regular, FontWeight.Normal),
+    Font(R.font.chakra_petch_light, FontWeight.Light)
+)
+
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
     headlineLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.ExtraBold,
+        fontFamily = sirachaFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 36.sp,
+        lineHeight = 54.sp,
+        letterSpacing = 2.sp
+    ), // Top App Bar
+    headlineMedium = TextStyle(
+        fontFamily = stylishFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 32.sp,
+        lineHeight = 48.sp,
+        letterSpacing = 1.sp
+    ), // Full Date display
+    headlineSmall = TextStyle(
+        fontFamily = courierPrimeFontFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 28.sp,
+        lineHeight = 42.sp,
+        letterSpacing = 1.sp
+    ),
+    displayLarge = TextStyle(
+        fontFamily = deliusFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 1.sp
+    ), // Task Names
+    displayMedium = TextStyle(
+        fontFamily = deliusSwashFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 30.sp,
         letterSpacing = 0.5.sp
-    ),
-    headlineMedium = TextStyle(
-        fontFamily = FontFamily.Monospace,
-        fontWeight = FontWeight.Bold,
+    ), // Sub Task Names
+    displaySmall = TextStyle(
+        fontFamily = deliusSwashFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
-    headlineSmall = TextStyle(
-        fontFamily = FontFamily.Serif,
-        fontWeight = FontWeight.Thin,
-        fontSize = 12.sp,
-        lineHeight = 18.sp,
-        letterSpacing = 0.5.sp
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 19.sp,
         letterSpacing = 0.2.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
+    bodyLarge = TextStyle(
+        fontFamily = courierPrimeFontFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 24.sp,
+        lineHeight = 36.sp,
         letterSpacing = 0.5.sp
-    )
-    */
+    ), // Outlined buttons
+    bodyMedium = TextStyle(
+        fontFamily = courierPrimeFontFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 24.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 0.5.sp
+    ), // Outlined buttons
+    bodySmall = TextStyle(
+        fontFamily = courierPrimeFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
+        letterSpacing = 0.3.sp
+    ), // Duration
+    labelMedium = TextStyle(
+        fontFamily = rajdhaniFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
+        letterSpacing = 0.5.sp
+    ), // Labels with Icon
+    labelSmall = TextStyle(
+        fontFamily = rajdhaniFontFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.3.sp
+    ) // Navigation Bar Labels
 )

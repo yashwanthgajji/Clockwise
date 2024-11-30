@@ -46,7 +46,7 @@ fun DayTasksPieChart(
     dateSelected: String,
     reportDataList: List<ReportDataValue>
 ) {
-    val shuffledColors = colors.shuffled()
+    val shuffledColors = rememberSaveable { colors.shuffled() }
     var pieDataList by rememberSaveable { mutableStateOf(emptyList<Pie>()) }
     if (reportDataList.isNotEmpty()) {
         val totalDuration = reportDataList.sumOf { it.taskDuration }.toDouble()

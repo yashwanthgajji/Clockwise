@@ -3,6 +3,7 @@ package com.yash.apps.clockwise.presentation.reports
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -150,7 +151,9 @@ fun ReportsScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             DayTasksPieChart(
-                modifier = Modifier.capturable(captureController),
+                modifier = Modifier
+                    .capturable(captureController)
+                    .background(MaterialTheme.colorScheme.background),
                 dateSelected = DateFormatter.formatDate(uiState.dateSelected, FULL_DATE_FORMAT),
                 reportDataList = uiState.reportDataList,
             )

@@ -3,7 +3,9 @@ package com.yash.apps.clockwise.presentation.timeline.components
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.yash.apps.clockwise.R
@@ -33,9 +35,7 @@ fun TimelineList(days: List<TimelineDay>, modifier: Modifier = Modifier) {
                         totalDuration = recordDetail.getDurationInString(),
                         onItemClick = { /*TODO*/ }
                     )
-                    if (index != day.recordDetails.size - 1) {
-                        HorizontalDivider()
-                    }
+                    HorizontalDivider()
                 }
             }
         }

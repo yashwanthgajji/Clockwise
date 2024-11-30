@@ -1,6 +1,7 @@
 package com.yash.apps.clockwise.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
@@ -34,16 +35,14 @@ fun RecordList(
                 repeat(recordListItemValue.recordDetails.size) { index ->
                     val recordDetails = recordListItemValue.recordDetails[index]
                     RecordListItem(
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         startTime = recordDetails.getStartTimeInString(),
                         endTime = recordDetails.getEndTimeInString(),
                         duration = recordDetails.getDurationInString(),
                         subTaskName = if (!isSubTaskList) recordDetails.sName else null
                     )
-                    if (index != recordListItemValue.recordDetails.size - 1) {
-                        HorizontalDivider()
-                    }
+                    HorizontalDivider()
                 }
-                HorizontalDivider(color = MaterialTheme.colorScheme.secondary, thickness = 4.dp)
             }
         }
     }

@@ -32,9 +32,17 @@ fun IconWithLabel(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(modifier = Modifier.size(64.dp), painter = painterResource(id = icon), contentDescription = iconDescription)
+        Icon(
+            modifier = Modifier.size(64.dp),
+            painter = painterResource(id = icon),
+            contentDescription = iconDescription
+        )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = label, style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center, )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -43,6 +51,6 @@ fun IconWithLabel(
 @Composable
 private fun IconWithLabelPreview() {
     ClockwiseTheme {
-        IconWithLabel(icon = R.drawable.empty_folder_icon, label = "Empty Folder")
+        IconWithLabel(icon = R.drawable.empty_folder_icon, label = "No files found")
     }
 }

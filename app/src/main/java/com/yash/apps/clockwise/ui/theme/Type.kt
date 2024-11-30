@@ -94,16 +94,16 @@ val Typography = Typography(
     bodyMedium = TextStyle(
         fontFamily = courierPrimeFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 24.sp,
-        lineHeight = 36.sp,
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
         letterSpacing = 0.5.sp
     ), // Outlined buttons
     bodySmall = TextStyle(
         fontFamily = courierPrimeFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp,
-        lineHeight = 30.sp,
-        letterSpacing = 0.3.sp
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.1.sp
     ), // Duration
     labelMedium = TextStyle(
         fontFamily = rajdhaniFontFamily,

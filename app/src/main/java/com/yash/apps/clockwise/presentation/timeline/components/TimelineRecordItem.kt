@@ -44,11 +44,11 @@ fun TimelineRecordItem(
             ) {
                 Text(
                     text = taskName,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.displayLarge
                 )
                 Text(
                     text = subTaskName,
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.displayMedium
                 )
             }
             Column(
@@ -60,7 +60,7 @@ fun TimelineRecordItem(
             ) {
                 Text(
                     text = totalDuration,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                 )

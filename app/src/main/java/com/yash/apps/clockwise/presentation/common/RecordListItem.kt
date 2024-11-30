@@ -38,11 +38,11 @@ fun RecordListItem(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = startTime)
+            Text(text = startTime, style = MaterialTheme.typography.displayLarge)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "-")
+            Text(text = "-", style = MaterialTheme.typography.displayLarge)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = endTime)
+            Text(text = endTime, style = MaterialTheme.typography.displayLarge)
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,7 +54,8 @@ fun RecordListItem(
                 Text(
                     text = duration,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -66,7 +67,7 @@ fun RecordListItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                Text(text = subTaskName)
+                Text(text = subTaskName, style = MaterialTheme.typography.displayMedium)
             }
         }
     }

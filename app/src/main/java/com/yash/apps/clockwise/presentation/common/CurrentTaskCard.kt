@@ -61,13 +61,13 @@ fun CurrentTaskCard(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = taskName,
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.headlineSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
                     text = duration,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.displayLarge,
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -80,7 +80,7 @@ fun CurrentTaskCard(
                     Text(
                         modifier = Modifier.weight(1f),
                         text = subTaskName,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.displayMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -103,11 +103,11 @@ fun CurrentTaskCard(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Icon(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(36.dp),
                             painter = painterResource(id = R.drawable.stop_icon),
                             contentDescription = null
                         )
-                        Text(text = "STOP")
+                        Text(text = "STOP", style = MaterialTheme.typography.bodyLarge)
                     }
                 }
             }

@@ -23,12 +23,12 @@ import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 fun NewRecordTopAppBar(modifier: Modifier = Modifier, onBackPress: () -> Unit) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = "New Record", style = MaterialTheme.typography.headlineMedium)},
+        title = { Text(text = "New Record", style = MaterialTheme.typography.headlineLarge)},
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
         navigationIcon = {
             IconButton(onClick = onBackPress) {
                 Icon(
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier.size(36.dp),
                     painter = painterResource(id = R.drawable.back_icon),
                     contentDescription = "Go Back"
                 )

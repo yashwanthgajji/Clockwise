@@ -55,7 +55,7 @@ fun AllTaskScreen(
         Column(
             modifier = modifier
                 .padding(innerPadding)
-                .padding(start = 16.dp, top = 32.dp, end = 16.dp)
+                .padding(start = 16.dp, end = 16.dp)
         ) {
             AnimatedVisibility(visible = isActiveSession) {
                 activeSessionComponent()

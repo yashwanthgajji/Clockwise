@@ -170,6 +170,7 @@ fun AppNavigator(
                     navigateToSubTaskDetails(navController, task = t, subTask = s)
                 },
                 onStartClick = appNavigatorViewModel::startActiveSession,
+                onBackPress = { navController.navigateUp() },
                 isActiveSession = appNavigatorUiState.isActiveSession,
                 activeSessionComponent = currentTaskCard
             )
@@ -203,6 +204,7 @@ fun AppNavigator(
                     )
                 },
                 onStartClick = appNavigatorViewModel::startActiveSession,
+                onBackPress = { navController.navigateUp() },
                 isActiveSession = appNavigatorUiState.isActiveSession,
                 activeSessionComponent = currentTaskCard
             )

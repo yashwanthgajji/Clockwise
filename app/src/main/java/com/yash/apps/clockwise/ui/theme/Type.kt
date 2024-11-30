@@ -60,7 +60,7 @@ val Typography = Typography(
     headlineSmall = TextStyle(
         fontFamily = courierPrimeFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 2.sp,
+        fontSize = 28.sp,
         lineHeight = 42.sp,
         letterSpacing = 1.sp
     ), // Task Item

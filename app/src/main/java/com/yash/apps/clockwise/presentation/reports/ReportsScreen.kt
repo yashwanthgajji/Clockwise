@@ -117,7 +117,7 @@ fun ReportsScreen(
                         enabled = uiState.reportDataList.isNotEmpty()
                     ) {
                         Icon(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(36.dp),
                             painter = painterResource(id = R.drawable.share_icon),
                             contentDescription = "Share the report",
                         )

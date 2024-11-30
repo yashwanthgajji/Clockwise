@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
@@ -55,25 +56,16 @@ fun TaskItem(
             Icon(
                 painter = painterResource(id = R.drawable.play_icon),
                 contentDescription = "start Task $name",
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(24.dp)
+                modifier = Modifier.size(20.dp)
             )
         }
         IconButton(
             onClick = onMoreClick,
-            modifier = Modifier
-                .clip(MaterialTheme.shapes.small),
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = MaterialTheme.colorScheme.background
-            )
         ) {
             Icon(
-                imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
+                painter = painterResource(id = R.drawable.more_icon),
                 contentDescription = "start Task $name",
-                modifier = Modifier
-                    .height(24.dp)
-                    .width(24.dp)
+                modifier = Modifier.size(20.dp)
             )
         }
     }

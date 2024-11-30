@@ -15,7 +15,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,15 +38,14 @@ class NewRecordViewModel @Inject constructor(
     }
 
     fun onDateChange(dateInMillis: Long) {
-        val calendar = Calendar.getInstance().apply {
-            timeInMillis = dateInMillis
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
+        val utcDateAtStartOfDay = Instant
+            .ofEpochMilli(dateInMillis)
+            .atZone(ZoneOffset.UTC)
+            .toLocalDate()
+        val localDate = utcDateAtStartOfDay.atStartOfDay(ZoneId.systemDefault())
+        val date = Date.from(localDate.toInstant())
         _newRecordUiState.value = _newRecordUiState.value.copy(
-            date = calendar.time
+            date = date
         )
     }
 

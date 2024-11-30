@@ -9,8 +9,8 @@ import java.util.Date
 
 data class NewRecordUiState(
     val date: Date = DateUtil.getCurrentDateWithMidnightTime(),
-    val startTime: Calendar = CalendarUtil.getCurrentDate(),
-    val endTime: Calendar = CalendarUtil.getCurrentDate(),
+    val startTime: Calendar = Calendar.getInstance(),
+    val endTime: Calendar = Calendar.getInstance(),
     val duration: Long = 0L,
     val task: Task? = null,
     val subTask: SubTask? = null,

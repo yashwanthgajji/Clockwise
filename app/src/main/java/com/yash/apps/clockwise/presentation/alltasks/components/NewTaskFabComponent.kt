@@ -74,7 +74,7 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier, label: String, onSave: (S
                         taskName.value = ""
                         isInsertForm.value = false
                     }) {
-                        Text(text = "Save")
+                        Text(text = "Save", style = MaterialTheme.typography.bodyLarge)
                     }
                 }
             }
@@ -89,7 +89,7 @@ fun NewTaskFabComponent(modifier: Modifier = Modifier, label: String, onSave: (S
                         painter = painterResource(id = R.drawable.add_task_icon),
                         contentDescription = null,
                     )
-                    Text(text = label)
+                    Text(text = label, style = MaterialTheme.typography.bodyLarge)
                 }
             }
 

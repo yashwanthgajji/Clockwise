@@ -43,7 +43,7 @@ fun TaskDetailTabRow(modifier: Modifier = Modifier, selectedTab: Int, onTabSelec
                 selectedContentColor = MaterialTheme.colorScheme.secondary,
                 unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
             ) {
-                Text(text = tabTitle)
+                Text(text = tabTitle, style = MaterialTheme.typography.labelMedium)
             }
         }
     }

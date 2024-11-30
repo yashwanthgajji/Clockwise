@@ -54,7 +54,8 @@ fun DateSelectorRowItem(
             text = DateFormatter.formatDate(date, SELECTOR_DATE_FORMAT),
             maxLines = 2,
             textAlign = TextAlign.Center,
-            color = textColor
+            color = textColor,
+            style = MaterialTheme.typography.labelMedium
         )
         VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.onBackground)
     }

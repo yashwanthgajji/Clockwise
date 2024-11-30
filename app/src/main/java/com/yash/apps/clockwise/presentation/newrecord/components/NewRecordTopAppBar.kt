@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -22,7 +23,7 @@ import com.yash.apps.clockwise.ui.theme.ClockwiseTheme
 fun NewRecordTopAppBar(modifier: Modifier = Modifier, onBackPress: () -> Unit) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = "New Record")},
+        title = { Text(text = "New Record", style = MaterialTheme.typography.headlineMedium)},
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
         navigationIcon = {
             IconButton(onClick = onBackPress) {

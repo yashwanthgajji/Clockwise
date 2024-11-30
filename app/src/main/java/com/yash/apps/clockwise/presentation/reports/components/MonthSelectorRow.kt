@@ -38,7 +38,7 @@ fun MonthSelectorRow(
             modifier = Modifier.weight(1f),
             text = month,
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.labelMedium
         )
         IconButton(onClick = onNextClick, enabled = isNextEnabled) {
             Icon(

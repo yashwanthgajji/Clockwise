@@ -33,7 +33,8 @@ val stylishFontFamily = FontFamily(
 
 val rajdhaniFontFamily = FontFamily(
     Font(R.font.rajdhani_regular, FontWeight.Normal),
-    Font(R.font.rajdhani_medium, FontWeight.SemiBold)
+    Font(R.font.rajdhani_medium, FontWeight.SemiBold),
+    Font(R.font.rajdhani_bold, FontWeight.Bold)
 )
 
 val chakraPetchFontFamily = FontFamily(
@@ -59,22 +60,22 @@ val Typography = Typography(
     headlineSmall = TextStyle(
         fontFamily = courierPrimeFontFamily,
         fontWeight = FontWeight.Light,
-        fontSize = 28.sp,
+        fontSize = 2.sp,
         lineHeight = 42.sp,
         letterSpacing = 1.sp
-    ),
+    ), // Task Item
     displayLarge = TextStyle(
         fontFamily = deliusFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 24.sp,
-        lineHeight = 36.sp,
+        fontSize = 20.sp,
+        lineHeight = 30.sp,
         letterSpacing = 1.sp
     ), // Task Names
     displayMedium = TextStyle(
         fontFamily = deliusSwashFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 20.sp,
-        lineHeight = 30.sp,
+        fontSize = 16.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.5.sp
     ), // Sub Task Names
     displaySmall = TextStyle(
@@ -83,38 +84,38 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.2.sp
-    ),
+    ), // Dialog buttons
     bodyLarge = TextStyle(
-        fontFamily = courierPrimeFontFamily,
-        fontWeight = FontWeight.Light,
-        fontSize = 24.sp,
-        lineHeight = 36.sp,
-        letterSpacing = 0.5.sp
-    ), // Outlined buttons
-    bodyMedium = TextStyle(
-        fontFamily = courierPrimeFontFamily,
-        fontWeight = FontWeight.Light,
+        fontFamily = chakraPetchFontFamily,
+        fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
         lineHeight = 30.sp,
+        letterSpacing = 0.5.sp
+    ), // Filled buttons
+    bodyMedium = TextStyle(
+        fontFamily = chakraPetchFontFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ), // Outlined buttons
     bodySmall = TextStyle(
         fontFamily = courierPrimeFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 24.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.1.sp
     ), // Duration
     labelMedium = TextStyle(
         fontFamily = rajdhaniFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         lineHeight = 30.sp,
         letterSpacing = 0.5.sp
-    ), // Labels with Icon
+    ), // Labels with Icon, calendar date/month
     labelSmall = TextStyle(
         fontFamily = rajdhaniFontFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.3.sp

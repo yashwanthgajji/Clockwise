@@ -9,6 +9,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,7 +48,7 @@ fun RecordDatePicker(
                 }
             },
         value = selectedDate,
-        label = { Text(text = "Record Date") },
+        label = { Text(text = "Record Date", style = MaterialTheme.typography.labelMedium) },
         onValueChange = {},
         readOnly = true,
         trailingIcon = {
@@ -68,7 +69,7 @@ fun RecordDatePicker(
                         showDatePicker = false
                     }
                 ) {
-                    Text(text = "Done")
+                    Text(text = "Done", style = MaterialTheme.typography.displaySmall)
                 }
             },
             dismissButton = {
@@ -77,7 +78,7 @@ fun RecordDatePicker(
                         showDatePicker = false
                     }
                 ) {
-                    Text(text = "Cancel")
+                    Text(text = "Cancel", style = MaterialTheme.typography.displaySmall)
                 }
             }
         ) {

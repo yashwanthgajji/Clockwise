@@ -54,7 +54,7 @@ fun RecordSubTaskSelector(
                     }
                 },
             value = selectedItem?.sName?: "Select a Sub Task",
-            label = { Text(text = "Select Sub Task") },
+            label = { Text(text = "Select Sub Task", style = MaterialTheme.typography.labelMedium) },
             placeholder = { Text(text = "Select a SubTask") },
             onValueChange = {},
             readOnly = true,

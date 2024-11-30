@@ -70,7 +70,7 @@ fun SubTaskDetailScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null)
-                    Text(text = "Start Project")
+                    Text(text = "Start Task", style = MaterialTheme.typography.bodyLarge)
                 }
             }
             OutlinedButton(onClick = {
@@ -80,7 +80,7 @@ fun SubTaskDetailScreen(
                     }
                 }
             }) {
-                Text(text = "New Record")
+                Text(text = "New Record", style = MaterialTheme.typography.bodyMedium)
             }
             RecordList(
                 modifier = Modifier.fillMaxSize().padding(bottom = 16.dp),

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.yash.apps.clockwise.R
 
 @Composable
@@ -36,7 +37,11 @@ fun TaskItem(
     ) {
         Text(
             text = name,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontSize = 24.sp,
+                lineHeight = 28.sp
+            )
         )
         IconButton(
             onClick = onPlayClick,
